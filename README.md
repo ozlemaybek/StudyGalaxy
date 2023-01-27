@@ -156,4 +156,4 @@ dependencies {
 
 > build.gradle dosyalarının düzenlemelerini ilerde kullanabileceğim şeyleride düşünerek şimdilik böyle yaptım. Fakat sonradan değişebilir. 
 
-
+> Çalışmaya başlamadan önce Fragment dosyalarını aşağıdaki hale getirdim:
