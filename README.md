@@ -156,4 +156,55 @@ dependencies {
 
 > build.gradle dosyalarının düzenlemelerini ilerde kullanabileceğim şeyleride düşünerek şimdilik böyle yaptım. Fakat sonradan değişebilir. 
 
+## LOGO 
+
+> Uygulama logosunu figmada oluşturup svg ve png formatlarında indirdim. svg formatında olanı bikgisayarda manuel olarak proje dosyasına ekledim. png olanı ise android studio'dan drawable kalsörüne ekledim. Sonrasında drawable klasörü içinde bir vector asset oluşturarak svg formatındaki logonun xml dosyasını elde ettim: 
+
+![image](https://user-images.githubusercontent.com/109730490/215202018-3ebd5691-007b-438b-a844-5e05d916332b.png)
+
+## COLORS
+
+> Seçtiğim renkleri colors dosyasına ekledim:
+
+![image](https://user-images.githubusercontent.com/109730490/215202241-628e158a-5b69-472f-8240-6f56d7f0adc6.png)
+
+![image](https://user-images.githubusercontent.com/109730490/215202307-3471af97-2df0-4a0b-a138-57f3e113fba1.png)
+
 > Çalışmaya başlamadan önce Fragment dosyalarını aşağıdaki hale getirdim:
+
+![image](https://user-images.githubusercontent.com/109730490/215200870-044681bb-ec75-466b-8636-184f663aef26.png)
+
+## BUTTONS
+
+> drawable -> new -> drawable resources file :
+
+![image](https://user-images.githubusercontent.com/109730490/215207143-2a2d73cf-637a-4a61-bb96-0cdb916bf136.png)
+
+> Bir xml dosyası açmış olduk burada button'lar için bir arkaplan style'ı belirledim: 
+
+![image](https://user-images.githubusercontent.com/109730490/215208009-d041a59e-aaf5-429f-8507-3ad469309f6c.png)
+
+![image](https://user-images.githubusercontent.com/109730490/215208141-d8f3e703-6131-4b0d-b797-4e5f0dd33be9.png)
+
+## Themes.xml
+
+> Themes.xml dosyasında butonlar için bir style belirledim:
+
+![image](https://user-images.githubusercontent.com/109730490/215210616-159f70e1-e0c2-43cb-b701-c941108c0380.png)
+
+
+## Strings.xml
+
+> App genelinde kullanacağım stringleri bu şekilde tanımlıyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/215209370-afecfeaa-a0af-45a9-94c4-af866838fb69.png)
+
+## Fragment Düzenlemeleri Devam
+
+> Şimdi sign in için kullanacağım fragment'ı düzenlemeye başlıyorum:
+
+> Frame Layout'a bir ID ekledim.
+
+> Fragmentları activity'ye bağlamadan emülatörde göremeyiz!
+
+> Fragment'ı kullanabilmek için FragmentManager denen yapıyı çağırmalıyız. ve yapacağımız işlemleri başlatmak için fragmentTransaction denen bir yapı oluşturuyoruz.
