@@ -182,9 +182,7 @@ dependencies {
 
 > Bir xml dosyası açmış olduk burada button'lar için bir arkaplan style'ı belirledim: 
 
-![image](https://user-images.githubusercontent.com/109730490/215208009-d041a59e-aaf5-429f-8507-3ad469309f6c.png)
-
-![image](https://user-images.githubusercontent.com/109730490/215208141-d8f3e703-6131-4b0d-b797-4e5f0dd33be9.png)
+![image](https://user-images.githubusercontent.com/109730490/216053297-354d3b7d-e8df-4acb-a4be-8b5ab75ce275.png)
 
 ## Themes.xml
 
@@ -207,4 +205,43 @@ dependencies {
 
 > Fragmentları activity'ye bağlamadan emülatörde göremeyiz!
 
-> Fragment'ı kullanabilmek için FragmentManager denen yapıyı çağırmalıyız. ve yapacağımız işlemleri başlatmak için fragmentTransaction denen bir yapı oluşturuyoruz.
+> NOT: Fragment'ı kullanabilmek için FragmentManager denen yapıyı çağırmalıyız. ve yapacağımız işlemleri başlatmak için fragmentTransaction denen bir yapı oluşturuyoruz.
+
+> Sign in ve sign up işlemleri için iki farklı fragment tasarımı yaptım:
+
+![image](https://user-images.githubusercontent.com/109730490/216053805-cfe6a7b9-2feb-4c2a-8fc7-79e14a655f2f.png)
+
+## Fragment'ları Activity İçinde Gösterelim
+
+> Sign In ve Sign Up ekranları arasındaki geçişi textView'lara onClick metodu vererek yapacağım. Aşağıdaki resimde kırmızı işaretli yerlere koyduğum textView'lara tıklandığında iki ekran arası geçiş sağlanacak:
+
+![image](https://user-images.githubusercontent.com/109730490/216060744-2be5b644-6e3b-4b08-85d6-45de2e9bf8a0.png)
+
+> activity_main.xml dosyasında constraint layout'un içine fragment'ları göstermek için bir frame layout ekleyelim:
+
+![image](https://user-images.githubusercontent.com/109730490/216066291-daaadaaf-397b-45e8-9559-67ae14512ab4.png)
+
+> Ekledikten sonra frameLayout'a bir id verelim:
+
+![image](https://user-images.githubusercontent.com/109730490/216066666-2ec045b6-e3fb-4c27-9632-0b2bbd9e967c.png)
+
+> onClickSignInText ve onClickSignUpText metodlarını implemente edelim:
+
+
+
+## NAVIGATION
+
+> Şimdi oluşturduğum fragment'lar için navigation framework'ünü kullanacağım. 
+
+> Önce navigation için gerekli gradle  eklemelerini kontrol ettim. Bir eksik olmadığı için devam ettim. 
+
+> Şimdi fragment'lar arası geçiş ve veri aktarımını ayarlayacağım. RES klasörü altında bir navigation grafiği oluşturalım. Bunun için RES -> new -> android resource file (aşağıda işaretli 3 alanı belirledik): 
+
+![image](https://user-images.githubusercontent.com/109730490/216058532-e7b76157-eab8-4ee8-a08e-174f9ff0d255.png)
+
+> Bir projenin içinde birden fazla navigation grafiği oluşturulabileceği için isimlendirmeye dikkat ettim.
+
+
+
+
+
