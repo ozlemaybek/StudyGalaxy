@@ -297,3 +297,8 @@ class MainActivity : AppCompatActivity() {
 > Oluşturduğumuz frameLayout içine bir NavHostFragment ekledik ve hazırladığımız navigation graph'ı seçtik:
 
 ![image](https://user-images.githubusercontent.com/109730490/216093746-1b2b1ade-99ec-4e30-aa62-b7c11001e16b.png)
+
+> Oluşturduğumuz Mainactivity'den action bar'ı kaldırmak istiyoruz bu yüzden Android.Manifest.xml dosyasına aşağıda işaretlediğimiz satırı ekledik:
+
+![image](https://user-images.githubusercontent.com/109730490/216103768-644ab6ef-564c-4ec2-a799-8d8332970002.png)
+
