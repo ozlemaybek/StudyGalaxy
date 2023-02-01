@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_color"
-    tools:context=".SignInFragment">
+    tools:context=".view.SignInFragment">
 
 
     <ImageView
@@ -75,6 +75,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="76dp"
         android:fontFamily="@font/roboto_bold"
+        android:onClick="onClickSignUpText"
         android:text="@string/sign_up_text"
         android:textColor="@color/logo_color"
         android:textSize="16sp"

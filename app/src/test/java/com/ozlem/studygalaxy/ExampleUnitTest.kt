@@ -1,4 +1,4 @@
-package com.example.studygalaxy
+package com.ozlem.studygalaxy
 
 import org.junit.Test
 
