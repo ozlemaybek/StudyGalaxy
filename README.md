@@ -225,10 +225,6 @@ dependencies {
 
 ![image](https://user-images.githubusercontent.com/109730490/216066666-2ec045b6-e3fb-4c27-9632-0b2bbd9e967c.png)
 
-> onClickSignInText ve onClickSignUpText metodlarını implemente edelim:
-
-
-
 ## NAVIGATION
 
 > Şimdi oluşturduğum fragment'lar için navigation framework'ünü kullanacağım. 
@@ -242,6 +238,62 @@ dependencies {
 > Bir projenin içinde birden fazla navigation grafiği oluşturulabileceği için isimlendirmeye dikkat ettim.
 
 
+> MainActivity.kt'de onClickSignInText ve onClickSignUpText metodlarını implemente edelim:
 
+```kotlin
+package com.example.studygalaxy.view
 
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import com.example.studygalaxy.R
 
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+    }
+
+    fun onClickSignInText(view : View){
+
+        // Fragment'ı kullanabilmek için FragmentManager denen yapıyı çağırmalıyız:
+        val fragmentManager = supportFragmentManager
+
+        // Yapacağımız işlemleri başlatmak için fragmentTransaction denen bir yapı oluşturuyoruz.
+        // Bu fragment ile ilgili değişiklik yapacağız demiş oluyoruz:
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        // Artık işlemlerimizi fragmentTransaction kullanarak yapabiliriz.
+
+        // Fragment oluşturalım:
+        // Eşitliğin sağ tarafı Fragment'ın ismi:
+        val signInFragment = SignInFragment()
+
+        // replace: Öncesinde bir fragment varsa onu kaldırır ve istediğimiz fragment'ı ekler.
+        // ilk parametre: Bu fragment'ı kim kullanacak
+        // ikinci fragment: hangi fragment'ı gösterecek
+        // .commit() diyerek transaction'ı commit ediyorum yani burada yaptığım işlemi artık sonlandırıyorum:
+        fragmentTransaction.replace(R.id.frameLayoutID, signInFragment).commit()
+    }
+
+    fun onClickSignUpText(view : View){
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        // Fragment oluşturalım:
+        // Eşitliğin sağ tarafı Fragment'ın ismi:
+        val signUpFragment = SignUpFragment()
+
+        // replace: Öncesinde bir fragment varsa onu kaldırır ve istediğimiz fragment'ı ekler.
+        // ilk parametre: Bu fragment'ı kim kullanacak
+        // ikinci fragment: hangi fragment'ı gösterecek
+        // .commit() diyerek transaction'ı commit ediyorum yani burada yaptığım işlemi artık sonlandırıyorum:
+        fragmentTransaction.replace(R.id.frameLayoutID, signUpFragment).commit()
+
+    }
+}
+```
+> Oluşturduğumuz frameLayout içine bir NavHostFragment ekledik ve hazırladığımız navigation graph'ı seçtik:
+
+![image](https://user-images.githubusercontent.com/109730490/216093746-1b2b1ade-99ec-4e30-aa62-b7c11001e16b.png)
