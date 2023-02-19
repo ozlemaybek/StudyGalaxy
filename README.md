@@ -302,3 +302,148 @@ class MainActivity : AppCompatActivity() {
 
 ![image](https://user-images.githubusercontent.com/109730490/216103768-644ab6ef-564c-4ec2-a799-8d8332970002.png)
 
+## BOTTOM NAVIGATION BAR
+
+> MainActivity2 içinde bir bottom navigation bar oluşturacağım. Araştırdığımda bottom navigation bar içinde 3 ila 5 tane item olabileceğini gördüm. Ben 5 tane kullanacağım. Bir activity içinde 5 fragment ile fraklı işlevleri göstereceğim. 
+
+> Bir yandan da bu activity'yi oluşturduğum andan itibaren view binding kullanmaya başlayacağım. 
+
+### VIEW BINDING
+
+> View Binding'i kullanmak için öncelikle build.gradle (app-module) dosyasında view binding’i aktive etmemiz gerekiyor bunun için android bloğunun içine aşağıdaki kodu eklememiz gerekiyor:
+
+```kotlin
+// ViewBinding'i aktif hale getirelim:
+    viewBinding{
+        enabled = true
+    }
+```
+
+> Sonrasında MainActivity2'de view binding kullanmak istediğim için aşağıdaki işlemleri yapıyorum:
+
+```kotlin
+package com.ozlem.studygalaxy
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.ozlem.studygalaxy.databinding.ActivityMain2Binding
+
+class MainActivity2 : AppCompatActivity() {
+
+    // view binding için :
+    private lateinit var binding2 : ActivityMain2Binding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // view binding için :
+        binding2 = ActivityMain2Binding.inflate(layoutInflater)
+        setContentView(binding2.root)
+    }
+```
+
+### BOTTOM NAVIGATION BAR DEVAM
+
+> activity_main2.xml dosyasına gidiyoruz ve arama çubuğundan aratıp bularak ekrana bir bottom navigation view ekliyoruz. Sonra constraint layout içine bir frame layout ekliyoruz sonuç olarak component tree şu hali alıyor:
+
+![image](https://user-images.githubusercontent.com/109730490/219958884-52801b04-6dad-4f08-8e24-a726fd79ca27.png)
+
+> Elde etmek istediğimiz görünüm bu:
+
+![image](https://user-images.githubusercontent.com/109730490/219960997-47a8fcdf-9edf-4a35-87ff-d0b1351e04fc.png)
+
+> Bu yüzden activity_main2.xml dosyasının kod bölümünü aşağıdaki hale getiriyoruz:
+
+````kotlin
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+    <FrameLayout
+        android:id="@+id/frameLayout2ID"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationViewId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationViewId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+> Şimdi fragment'lar için bottom navigation view'da görüncek icon'lara ihtiyacımız var. Bu yüzden her icon için bir vector asset oluşturmalıyız. Bunu şu şekilde yapıyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/219961418-0a6195e2-0ff1-4d31-aa2f-46c116d1830e.png)
+
+> Açılan ekranda clip_art'ı işaretledikten sonra işaretli yere tıklayarak icon seçiyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/219961493-3603febe-e3fa-4da3-8cb2-fd08ee061a51.png)
+
+> İstediğimiz icon'u bu şekilde aratarak bulabiliriz:
+
+![image](https://user-images.githubusercontent.com/109730490/219961559-cbc5f1cc-4475-4efe-9eba-903ed65e2083.png)
+
+> Rengi için sonradan xml dosyasından değişiklik yapabileceğim için değiştirmiyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/219961673-4f86146e-ac05-4b80-a489-751aa977385c.png)
+
+> Toplam 5 icon için 5 adet vector asset oluşturdum :
+
+![image](https://user-images.githubusercontent.com/109730490/219962529-95b02b99-2ef4-480e-ad22-b1d7c872798d.png)
+
+> Şimdi bottom navigation view için bir menu'ye ihtiyacımız var bu yüzden yeni bir android resource directory oluşturuyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/219962723-fc228233-8620-4daf-8609-48eb7a9e5cd1.png)
+
+![image](https://user-images.githubusercontent.com/109730490/219963488-79c10727-7ef7-4b7c-84f2-0e1a2935b560.png)
+
+> Şimdi menu > new > menu resource file:
+
+![image](https://user-images.githubusercontent.com/109730490/219963607-79c8ee29-b582-48b8-8421-ceabb834390f.png)
+
+> Sonrasında bottom navigation bar'da kaç bölüm olmasını istiyorsak o kadar menu item’ı şekilde göründüğü gibi component tree’nin içine sürüklemeliyiz:
+
+![image](https://user-images.githubusercontent.com/109730490/219963753-c8370d41-f043-4f02-a7ba-6f873331440b.png)
+
+> Şuanda elimizde bu var:
+
+![image](https://user-images.githubusercontent.com/109730490/219963835-792a4e88-9a8d-4682-9318-baa0ad10669c.png)
+
+> Sonrasında title (başlık) bölümlerini değiştirdik:
+
+![image](https://user-images.githubusercontent.com/109730490/219963947-fe4a3588-79d0-4ba4-8b2c-2d34636c653b.png)
+
+> Icon'ları ve id'leri ekleyelim:
+
+![image](https://user-images.githubusercontent.com/109730490/219964277-97b90fee-8874-415c-ab90-6bc7e16fadee.png)
+
+> activity_main2.xml dosyasına gidip bunu ekliyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/219964354-4921be23-8cb2-4745-b348-f942b30e29d5.png)
+
+> Şuanda elimizde olan görüntü bu:
+
+![image](https://user-images.githubusercontent.com/109730490/219964703-d0233136-9d60-4350-815d-b0a6f71d6e97.png)
+
+> Şimdi bottom navigation bar’daki bölüm sayısı kadar fragment oluşturmalıyız. 
+
+![image](https://user-images.githubusercontent.com/109730490/219964943-90ffbe32-fc8c-4ad1-a550-c080ba9186ba.png)
+
+> Bu fragment'ları belirlediğim özelliklere göre yapılandıracağım. StatisticsFragment ile başlayalım. 
+
+
+
