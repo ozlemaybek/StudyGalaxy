@@ -35,8 +35,8 @@ android {
         jvmTarget = '1.8'
     }
 
-    // DataBinding'i aktif hale getirelim:
-    dataBinding{
+    // ViewBinding'i aktif hale getirelim:
+    viewBinding{
         enabled = true
     }
 
@@ -46,7 +46,7 @@ dependencies {
 
     // Güncellemeleri yapmadan önce gerekli tanımlamaları yapalım:
     def retrofitVersion = '2.8.1'
-    def glideVersion = '4.11.0'
+    def glideVersion = '4.12.0'
     def rxJavaVersion = '2.2.8'
     def rxAndroidVersion = '2.1.1'
     def roomVersion = '2.5.0'
@@ -54,7 +54,7 @@ dependencies {
     def preference_version= '1.2.0'
 
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
