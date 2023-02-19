@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Statistics"
+        android:id="@+id/statistics_icon_id"
+        android:icon="@drawable/statistics_icon"/>
+    <item android:title="Goals"
+        android:id="@+id/goals_icon_id"
+        android:icon="@drawable/goals_icon"/>
+    <item android:title="Home"
+        android:id="@+id/home_icon_id"
+        android:icon="@drawable/home_icon"/>
+    <item android:title="Calender"
+        android:id="@+id/calender_icon_id"
+        android:icon="@drawable/calender_icon"/>
+    <item android:title="Profile"
+        android:id="@+id/profile_icon_id"
+        android:icon="@drawable/profile_icon"/>
+</menu>

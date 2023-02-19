@@ -1,4 +1,4 @@
-package com.ozlem.studygalaxy
+package com.ozlem.studygalaxy.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
