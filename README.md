@@ -385,6 +385,7 @@ class MainActivity2 : AppCompatActivity() {
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
+
 > Şimdi fragment'lar için bottom navigation view'da görüncek icon'lara ihtiyacımız var. Bu yüzden her icon için bir vector asset oluşturmalıyız. Bunu şu şekilde yapıyorum:
 
 ![image](https://user-images.githubusercontent.com/109730490/219961418-0a6195e2-0ff1-4d31-aa2f-46c116d1830e.png)
@@ -444,6 +445,3 @@ class MainActivity2 : AppCompatActivity() {
 ![image](https://user-images.githubusercontent.com/109730490/219964943-90ffbe32-fc8c-4ad1-a550-c080ba9186ba.png)
 
 > Bu fragment'ları belirlediğim özelliklere göre yapılandıracağım. StatisticsFragment ile başlayalım. 
-
-
-
