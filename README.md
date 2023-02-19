@@ -353,7 +353,7 @@ class MainActivity2 : AppCompatActivity() {
 
 > Bu yüzden activity_main2.xml dosyasının kod bölümünü aşağıdaki hale getiriyoruz:
 
-````kotlin
+```kotlin
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
