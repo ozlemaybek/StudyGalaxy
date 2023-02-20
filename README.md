@@ -444,4 +444,70 @@ class MainActivity2 : AppCompatActivity() {
 
 ![image](https://user-images.githubusercontent.com/109730490/219964943-90ffbe32-fc8c-4ad1-a550-c080ba9186ba.png)
 
-> Bu fragment'ları belirlediğim özelliklere göre yapılandıracağım. StatisticsFragment ile başlayalım. 
+> Bu fragment'ları belirlediğim özelliklere göre yapılandıracağım. 
+
+> MainActivity2 için gerekli şeyleri ekleyelim:
+
+```kotlin
+package com.ozlem.studygalaxy.view
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.ozlem.studygalaxy.*
+import com.ozlem.studygalaxy.databinding.ActivityMain2Binding
+
+class MainActivity2 : AppCompatActivity() {
+
+    // view binding için :
+    private lateinit var binding2 : ActivityMain2Binding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // view binding için :
+        binding2 = ActivityMain2Binding.inflate(layoutInflater)
+        setContentView(binding2.root)
+
+        // İlk açıldığında home page'i göstermek için:
+        replaceFragment(HomeFragment())
+
+        // bottom navigation bar'ın listener'ını yazalım:
+        binding2.bottomNavigationViewId.setOnItemSelectedListener {
+
+            when(it.itemId){
+
+                // Burada sol tarafta bottom_navigation_menu.xml'deki id'leri kullanıyoruz,
+                // Sağ tarafta ise Fragment'ların dosya isimlerini kullanıyoruz:
+                R.id.statistics_icon_id -> replaceFragment(StatisticsFragment())
+                R.id.goals_icon_id -> replaceFragment(GoalsFragment())
+                R.id.home_icon_id -> replaceFragment(HomeFragment())
+                R.id.calender_icon_id -> replaceFragment(CalenderFragment())
+                R.id.profile_icon_id -> replaceFragment(ProfileFragment())
+
+                else ->{ }
+
+            }
+            true
+        }
+
+    }
+
+    private fun replaceFragment(fragment : Fragment){
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        // activity_main2.xml'deki frame layout'un id'si: frameLayout2ID :
+        fragmentTransaction.replace(R.id.frameLayout2ID,fragment)
+        fragmentTransaction.commit()
+
+    }
+
+}
+```
+
+> Manifest dosyasında MainActivity2 için action bar'ı kapattım:
+
+![image](https://user-images.githubusercontent.com/109730490/219982205-94c70ab7-15d8-40ec-a2a9-653d4773bd0e.png)
+
+> Şimdi önce fragment'lar için UI kısmını düzenleyeceğim sonrasında navigation_graph'lerini çıkaracağım. 
