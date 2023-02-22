@@ -4,9 +4,7 @@
         <shape>
 
             <gradient
-                android:gradientRadius="4000dp"
-                android:centerY=""
-                android:centerX=""
+                android:gradientRadius="3000dp"
                 android:startColor="@color/black"
                 android:centerColor="@color/logo_color"
                 android:endColor="@color/black"
