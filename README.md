@@ -511,3 +511,136 @@ class MainActivity2 : AppCompatActivity() {
 ![image](https://user-images.githubusercontent.com/109730490/219982205-94c70ab7-15d8-40ec-a2a9-653d4773bd0e.png)
 
 > Şimdi önce fragment'lar için UI kısmını düzenleyeceğim sonrasında navigation_graph'lerini çıkaracağım. 
+
+## fragment_home.xml Tasarımı
+
+> Ekranın başındaki tasarımlar kodlara bakılarak anlaşılabilir ancak nestedScrollView içine constraint Layout atınca constraint layout'un içindeki tasarımı yapmak biraz zorlayabiliyor çünkü eklediğim view'ların constraint'lerini xml'de yazarak belirlemem gerekti. 
+
+> RecylerView'lu bölüme geçiyorum. Önce layout klasöründe bir layout resource file oluşturdum burada recycler view'un tek satırının tasarımını yapacağım. Dosyanın adını "goals_recycler_row.xml" olarak belirledim. 
+
+> goals_recyler_row.xml
+
+```kotlin
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Bu dosyada recyclerView'umuzun bir satırını tasarlayacağız.-->
+<!--Bu xml her bir recyclerView sırasında kullanılacak.-->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout_id_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/info_space_style">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_0_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Final Project"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textview_1_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Everyday"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/linear_layout_id_0"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_2_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="%99"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textview_3_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="04.00.00"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu_icon"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+> Tasarımı şu şekilde oldu:
+
+![image](https://user-images.githubusercontent.com/109730490/220799336-94f9fa09-bd71-4d18-865e-fa847327b8f9.png)
+
+> Şimdi menu klasöründe bir menu resource file açalım ve ismini goals_menu.xml koyalım:
+
+> goals_menu.xml dosyasını aşağıdaki şekilde yapılandırdım:
+
+![image](https://user-images.githubusercontent.com/109730490/220800275-1d0feeea-b5b1-4249-899f-9062e9a86d1f.png)
+
+## recylerView işlemleri devam
+
+> Önce build.gradle(app-module) dosyasına ilgili eklemeyi yaptım:
+
+![image](https://user-images.githubusercontent.com/109730490/220801991-7afbdad2-5e0a-43b1-8d04-6e97a1370485.png)
+
+> Şimdi recylerView'u görüntülemek istediğimiz yere yani "fragment_home.xml" dosyasına recyclerView ekleyelim:
+
+> constraint layout içine bir tane frame layout attım onun içinede recycler view ekledim:
+
+![image](https://user-images.githubusercontent.com/109730490/220803865-5c828926-320d-49f0-a6d3-cc985b5a7e85.png)
+
