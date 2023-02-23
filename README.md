@@ -624,3 +624,23 @@ class MainActivity2 : AppCompatActivity() {
 ```
 > Tasarımı şu şekilde oldu:
 
+![image](https://user-images.githubusercontent.com/109730490/220799336-94f9fa09-bd71-4d18-865e-fa847327b8f9.png)
+
+> Şimdi menu klasöründe bir menu resource file açalım ve ismini goals_menu.xml koyalım:
+
+> goals_menu.xml dosyasını aşağıdaki şekilde yapılandırdım:
+
+![image](https://user-images.githubusercontent.com/109730490/220800275-1d0feeea-b5b1-4249-899f-9062e9a86d1f.png)
+
+## recylerView işlemleri devam
+
+> Önce build.gradle(app-module) dosyasına ilgili eklemeyi yaptım:
+
+![image](https://user-images.githubusercontent.com/109730490/220801991-7afbdad2-5e0a-43b1-8d04-6e97a1370485.png)
+
+> Şimdi recylerView'u görüntülemek istediğimiz yere yani "fragment_home.xml" dosyasına recyclerView ekleyelim:
+
+> constraint layout içine bir tane frame layout attım onun içinede recycler view ekledim:
+
+![image](https://user-images.githubusercontent.com/109730490/220803865-5c828926-320d-49f0-a6d3-cc985b5a7e85.png)
+
