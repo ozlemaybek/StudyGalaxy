@@ -511,3 +511,116 @@ class MainActivity2 : AppCompatActivity() {
 ![image](https://user-images.githubusercontent.com/109730490/219982205-94c70ab7-15d8-40ec-a2a9-653d4773bd0e.png)
 
 > Şimdi önce fragment'lar için UI kısmını düzenleyeceğim sonrasında navigation_graph'lerini çıkaracağım. 
+
+## fragment_home.xml Tasarımı
+
+> Ekranın başındaki tasarımlar kodlara bakılarak anlaşılabilir ancak nestedScrollView içine constraint Layout atınca constraint layout'un içindeki tasarımı yapmak biraz zorlayabiliyor çünkü eklediğim view'ların constraint'lerini xml'de yazarak belirlemem gerekti. 
+
+> RecylerView'lu bölüme geçiyorum. Önce layout klasöründe bir layout resource file oluşturdum burada recycler view'un tek satırının tasarımını yapacağım. Dosyanın adını "goals_recycler_row.xml" olarak belirledim. 
+
+> goals_recyler_row.xml
+
+```kotlin
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Bu dosyada recyclerView'umuzun bir satırını tasarlayacağız.-->
+<!--Bu xml her bir recyclerView sırasında kullanılacak.-->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout_id_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/info_space_style">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_0_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Final Project"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textview_1_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Everyday"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/linear_layout_id_0"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_2_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="%99"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textview_3_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="04.00.00"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu_icon"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+> Tasarımı şu şekilde oldu:
+
