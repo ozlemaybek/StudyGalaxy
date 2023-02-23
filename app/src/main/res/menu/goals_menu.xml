@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/complete_option_id"
+        android:title="Complete"
+        android:icon="@drawable/complete_icon"/>
+    <item
+        android:id="@+id/edit_option_id"
+        android:title="Edit"
+        android:icon="@drawable/edit_icon"/>
+    <item
+        android:id="@+id/delete_option_id"
+        android:title="Delete"
+        android:icon="@drawable/delete_icon"/>
+
+</menu>
