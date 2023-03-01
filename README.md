@@ -644,3 +644,136 @@ class MainActivity2 : AppCompatActivity() {
 
 ![image](https://user-images.githubusercontent.com/109730490/220803865-5c828926-320d-49f0-a6d3-cc985b5a7e85.png)
 
+## FIREBASE AKTİVASYON İŞLEMLERİ
+
+> Diğer aşamalara devam etmeden önce projenin firebase aktivasyonunu yapmak istiyorum çünkü artık yavaş yavaş kullanıcı işlemleri ile iligli sonuçları görebilmem gerekiyor. 
+
+![image](https://user-images.githubusercontent.com/109730490/222226413-f1208014-a966-4763-b6a8-fba3eb05ea27.png)
+
+![image](https://user-images.githubusercontent.com/109730490/222226501-f1433681-354a-464e-b586-11c6a4849668.png)
+
+![image](https://user-images.githubusercontent.com/109730490/222226648-197a7085-981b-45ad-97b6-aed1917373d2.png)
+
+![image](https://user-images.githubusercontent.com/109730490/222226889-76d524cd-a2af-4141-aeb0-0afa440456d1.png)
+
+> Firebase’e android uygulamamız ile firebase’i birleştireceğimizi belirtelim:
+
+![image](https://user-images.githubusercontent.com/109730490/222227240-8ffda280-3049-48b0-b477-37dba89092b1.png)
+
+> Uygulamanın paket ismini girdim ve "Register App" butonuna tıkladım:
+
+![image](https://user-images.githubusercontent.com/109730490/222227700-92eef6b0-1ca1-462e-8417-51ba6f8e0296.png)
+
+> İkinci adımda bizim için bir dosya oluşturuluyor. Bu  dosya bizim android projemiz ile firebase sunucusunu birbirine bağlayan dosya ve bu dosya olmadan hiçbir işlem yapamıyoruz. Bu yüzden bu dosyayı indiriyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/222228266-fd247b95-1a83-4053-a894-bc49964ed297.png)
+
+> Sonrasında google-services.json dosyasını projemin içine alıyorum bunun için Android Studio'da android görünümünden project görünümüne geçiyorum ve dosyayı app bölümüne yapıştırıyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/222230517-42e7871d-c7ed-4882-a04e-47f7678e5cc6.png)
+
+> Aslında google-services.json dosyasının içindekilerin herhangi birine gösterilmemesi gerekiyor fakat bu projeyi Google Play Store'a yüklemeyeceğim. 
+
+> Şimdi 3. adıma geçiyorum. Bu adımda projeme Firebase SDK'sını ekliyorum. Bu adım 2 aşamalı. 
+
+> 1. ADIM: Bunun için build.gradle (project) dosyasına; aşağıda işaretlediğim kısmı dependencies bloğuna ekliyorum. Çünkü güncellemelerden sonra artık allProjects bloğu settings.gradle dosyasında bulunuyor ve buildScript kısmıda zaten build.gradle (project) dosyamda mevcut. 
+
+![image](https://user-images.githubusercontent.com/109730490/222234212-7f4ea56f-af4d-4774-82e7-54440730f405.png)
+
+> sync now işlemini yaptıktan sonra ikinci adıma geçiyorum.
+
+> 2. ADIM: Sonra 2. adımda ilgili kodları build.gradle (module-app) dosyasına ekliyorum:
+
+![image](https://user-images.githubusercontent.com/109730490/222234254-a7ae9fbb-13df-40e6-b54f-a095499f42f3.png)
+
+> Artık işlem tamamlandı "Continue to Console" butonu ile console'a geri dönüyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/222235842-dcae8f34-8f5f-44cc-9cd6-3339a7162ac9.png)
+
+> Firebase'in projeye entegre olup olmadığını kontrol etmek amacıyla MainActivity.kt içindeki onCreate metodunun içine Firebase yazıp ilgili özellikler geldi mi diye bakıyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/222241906-b5bcb323-5e8b-4af0-bb9b-1e3ba9556ac6.png)
+
+## FIREBASE AUTHENTICATION (Kullanıcı İşlemleri)MODÜLÜ ENTEGRASYONU
+
+> Firebase Authentication modülü; kullanıcıların kayıt olabilmesi, giriş yapabilmesi, giriş yapılıp yapılmadığının algılanması gibi özellikleri barındırır.  
+
+> Firebase Console’da soldaki bölümden Authentication’a tıklayalım:
+
+![image](https://user-images.githubusercontent.com/109730490/222244528-22cb0baf-5e9a-48d0-aa58-249beb1af7ab.png)
+
+![image](https://user-images.githubusercontent.com/109730490/222244683-6e363c1d-eb08-4cf7-b907-f4a67eaec741.png)
+
+> Buradaki “Get started” butonu ile authentication yani kullanıcı işlemlerini başlatalım. Get started butonuna basınca şöyle bir ekranla karşılaşıyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/222244925-18f67763-04da-49c5-b42e-4284864249a6.png)
+
+> Sign-in method’lardan birini, birden fazlasını ya da hepsini uygulamamızda kullanmak isteyebiliriz. Ben email ve parola kullanacağım. Yaptığımız etkinleştirmeleri  android tarafında da uygulamam gerekiyor.
+
+> Email/password seçeneğine tıkladıktan sonra karşımıza gelen ekranda enable yaparak aktif hale getiriyoruz. Resimdeki 2. enable direkt email’e giriş linki atarak password kullanmadan giriş yapmayı sağlıyor ama bunu kullanmayacağım. “Save” butonuna basalım:
+
+![image](https://user-images.githubusercontent.com/109730490/222245720-74ac6ec1-a5d9-4922-944a-941e4d2f9737.png)
+
+> Etkinleştirildi:
+
+![image](https://user-images.githubusercontent.com/109730490/222246011-922f3a7c-88c5-40d3-967e-faa137632018.png)
+
+> Bütün modüllerin ayrı SDK’sı var. Firebase’in bir sürü modülü var ve hepsini kullanmıyoruz. Yük olmaması içinde modüllere ait SDK’lar tek tek kuruluyor. 
+
+> Documentation kısmından Build > Aythentication bölümüne gittik. Sonra aşağıdaki bölüme geçelim:
+
+![image](https://user-images.githubusercontent.com/109730490/222246613-a1fbff8b-0102-41a6-b5ac-86d907d8a4fd.png)
+
+> Ve Android kodları tarafında gerekli authentication işlemlerini yapmaya başlayalım:
+
+> Aşağıda işaretli satırı build.gradle (app-module) içine ekleyelim:
+
+![image](https://user-images.githubusercontent.com/109730490/222247331-276a4f07-c0dc-4ed3-a882-190e8eac7ade.png)
+
+> Şimdi dokümanda bir FirebaseAuth objesi oluşturmamız isteniyor. Sırayla aşağıdaki işlemleri MainActivity.kt içinde yapıyoruz:
+
+![image](https://user-images.githubusercontent.com/109730490/222250393-9308a77e-d11f-472c-a1a6-39969f880399.png)
+
+> Şİmdi güncel kullanıcı yani current user'ı alabilirsin diyor fakat henüz hiçbir kullanıcı oluşturmadım. 
+
+> Bu yüzden SignInFragment ve SignUpFragment'ta kod düzenlemelerini ayarlayalım:
+
+> Önce iki fragment'a ait kt dosyalarında FirebaseAuth objeleri oluşturma işlemini yaptım:
+
+![image](https://user-images.githubusercontent.com/109730490/222252383-799b5fe4-62d3-44ab-a983-81afec481fc2.png)
+
+> Fragment'ta view binding işlemi activity'ye göre farklı işliyor bunun için onCreate yerine onCreateView metodunu kullanıyoruz. Aynı zamanda onDestroy metodundada binding'i null yapıyoruz: 
+
+```kotlin
+class SignInFragment : Fragment() {
+
+    // Bir FirebaseAuth objesi oluşturalım:
+    private lateinit var auth: FirebaseAuth
+    // view binding için:
+    private var _binding: FragmentSignInBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Oluşturduğumuz FirebaseAuth objesini initialize edelim:
+        auth = Firebase.auth
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // view binding için:
+        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}
+```
