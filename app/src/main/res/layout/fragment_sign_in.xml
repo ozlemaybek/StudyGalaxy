@@ -62,6 +62,7 @@
         android:id="@+id/sign_in_button_id"
         style="@style/allButtonStyle"
         android:layout_marginBottom="164dp"
+        android:onClick="signInOnclick"
         android:text="@string/sign_in_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
