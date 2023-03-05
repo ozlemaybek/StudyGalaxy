@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     // Eklemelerim :
-    id 'kotlin-android-extensions'
+    // id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
     // Firebase için:
@@ -38,8 +38,8 @@ android {
     }
 
     // ViewBinding'i aktif hale getirelim:
-    viewBinding{
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 
 }

@@ -26,6 +26,7 @@ class MainActivity2 : AppCompatActivity() {
 
             when(it.itemId){
 
+                // Bottom Navigation Bar'da hangi icona tıkladığımızda hangi fragment'a geçeceğimizin kodları:
                 // Burada sol tarafta bottom_navigation_menu.xml'deki id'leri kullanıyoruz,
                 // Sağ tarafta ise Fragment'ların dosya isimlerini kullanıyoruz:
                 R.id.statistics_icon_id -> replaceFragment(StatisticsFragment())

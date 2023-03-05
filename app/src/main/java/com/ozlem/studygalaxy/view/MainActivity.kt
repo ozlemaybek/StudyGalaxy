@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.ozlem.studygalaxy.R
-import com.ozlem.studygalaxy.databinding.ActivityMain2Binding
 import com.ozlem.studygalaxy.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frameLayoutID, signUpFragment).commit()
 
     }
-
+/*
     fun signInOnclick(view : View){
 
             // Kullanıcının girdiği username'i bir string olarak alalım:
@@ -98,5 +97,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    fun signUpOnclick(view : View){
+
+    }
+*/
+
 
 }

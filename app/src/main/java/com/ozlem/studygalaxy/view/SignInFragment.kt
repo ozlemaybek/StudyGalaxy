@@ -41,9 +41,10 @@ class SignInFragment : Fragment() {
         val view = binding.root
         return view
     }
-
+/*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         // Oluşturduğumuz FirebaseAuth objesini initialize edelim:
         auth = Firebase.auth
@@ -74,20 +75,21 @@ class SignInFragment : Fragment() {
 
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    /*
+
     fun signInOnclick(view: View){
         // Bu metod algılanamıyor!!!
         // Kullanıcının girdiği username'i bir string olarak alalım:
         val username = binding.plainTextUsernameId.text.toString()
         val password = binding.plainTextPasswordId.text.toString()
     }
-     */
 
+*/
 
 
 }
