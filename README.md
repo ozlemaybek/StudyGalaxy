@@ -777,3 +777,27 @@ class SignInFragment : Fragment() {
 
 }
 ```
+
+## Firebase Firestore Database Entegrasyonu
+
+![image](https://user-images.githubusercontent.com/109730490/224027805-639db0a4-dcd4-45eb-ad96-e65e66d74de2.png)
+
+> Başlatmak için “Create Database” butonuna basmalıyız. Bunu yaptığımızda güvenlik ayarlarını nasıl seçmek istediğimizi soruyor. Burada güvenlikten kastedilen şey veritabanımıza kimin erişebileceği ve kimin erişemeyeceği. Bunun için iki farklı seçeneğimiz var. 
+
+![image](https://user-images.githubusercontent.com/109730490/224028774-5582aa8e-4939-4dfa-8725-8844e71e957f.png)
+
+> 1) Production Mode: Hiçbir şeye izin vermez.
+
+> 2) Test Mode: Herkesin erişimine izin verir ve bunun için 30 günlük bir süre tanımlar. Bunu github’daki token’lara benziyor.
+
+> Şimdilik kodlama aşamasında olduğum için test modunda başlatıyorum.
+
+> “Test Mode” u seçtikten sonra Next butonuna basalım.
+
+> İkinci adımda lokasyon seçmemizi istiyor. Bunu uygulamayı yapacağımız yere yakın seçmemiz gerekiyor.
+
+![image](https://user-images.githubusercontent.com/109730490/224029085-a90d4ad3-2cdc-43e0-acce-ed2caa9a51e2.png)
+
+> eur3 seçeneğini seçip Enable butonuna bastım. Bu işlemi sadece bir kez yapıyoruz bir daha karşımıza gelmeyecek. Şu anda bizim için firestore veritabanı oluşturuluyor. 
+
+> Şimdi oluşturulan alanda kendi database'imi kuracağım. 
