@@ -1,14 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProfileFragment">
+    tools:context=".view.ProfileFragment"
+    android:background="@color/app_background_color"
+    android:id="@+id/constraint_layout_id_0">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/settingsButtonID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:onClick="onClickSettings"
+        android:src="@drawable/settings_icon"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_id_0"
+        app:layout_constraintTop_toTopOf="@+id/constraint_layout_id_0">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/profile_image_id"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/profile_image"
+        app:layout_constraintBottom_toTopOf="@+id/constraint_layout_id_1"
+        app:layout_constraintEnd_toEndOf="@id/constraint_layout_id_0"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@id/constraint_layout_id_0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_id_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_id_0"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_id_0"
+        app:layout_constraintTop_toBottomOf="@id/profile_image_id">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/linear_layout_id_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textview_1_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="username:"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/username_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="ozlem"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_id_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.262"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_id_0">
+
+            <TextView
+                android:id="@+id/textview_2_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="email:"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/email_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="ozlem@gmail.com"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_id_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.082"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_id_1">
+
+            <TextView
+                android:id="@+id/textview_3_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="password:"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textview_6_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="********"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textview_0_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="username"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image_id"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_id_0"
+        app:layout_constraintStart_toStartOf="@+id/constraint_layout_id_0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/log_out_button_id"
+        style="@style/allButtonStyle"
+        android:layout_margin="10dp"
+        android:onClick="onClickLogOutButton"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_layout_id_1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

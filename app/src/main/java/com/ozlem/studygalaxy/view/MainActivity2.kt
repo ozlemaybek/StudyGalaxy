@@ -1,7 +1,9 @@
 package com.ozlem.studygalaxy.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import com.ozlem.studygalaxy.*
 import com.ozlem.studygalaxy.databinding.ActivityMain2Binding
@@ -24,7 +26,7 @@ class MainActivity2 : AppCompatActivity() {
         // bottom navigation bar'ın listener'ını yazalım:
         binding2.bottomNavigationViewId.setOnItemSelectedListener {
 
-            when(it.itemId){
+            when (it.itemId) {
 
                 // Bottom Navigation Bar'da hangi icona tıkladığımızda hangi fragment'a geçeceğimizin kodları:
                 // Burada sol tarafta bottom_navigation_menu.xml'deki id'leri kullanıyoruz,
@@ -35,22 +37,25 @@ class MainActivity2 : AppCompatActivity() {
                 R.id.calender_icon_id -> replaceFragment(CalenderFragment())
                 R.id.profile_icon_id -> replaceFragment(ProfileFragment())
 
-                else ->{ }
+                else -> {}
 
             }
             true
         }
-
     }
 
-    private fun replaceFragment(fragment : Fragment){
+    // ekleme
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        // activity_main2.xml'deki frame layout'un id'si: frameLayout2ID :
-        fragmentTransaction.replace(R.id.frameLayout2ID,fragment)
-        fragmentTransaction.commit()
+    // ekleme
 
-    }
 
+        private fun replaceFragment(fragment: Fragment) {
+
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            // activity_main2.xml'deki frame layout'un id'si: frameLayout2ID :
+            fragmentTransaction.replace(R.id.frameLayout2ID, fragment)
+            fragmentTransaction.commit()
+
+        }
 }
