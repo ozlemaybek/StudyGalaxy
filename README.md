@@ -801,3 +801,9 @@ class SignInFragment : Fragment() {
 > eur3 seçeneğini seçip Enable butonuna bastım. Bu işlemi sadece bir kez yapıyoruz bir daha karşımıza gelmeyecek. Şu anda bizim için firestore veritabanı oluşturuluyor. 
 
 > Şimdi oluşturulan alanda kendi database'imi kuracağım. 
+
+> Kod tarafında build.gradle (app-module) kısmına ekleme yaptım:
+
+![image](https://user-images.githubusercontent.com/109730490/224033472-d45cafe3-c7a1-4d6e-a2e4-7ae509197879.png)
+
+
