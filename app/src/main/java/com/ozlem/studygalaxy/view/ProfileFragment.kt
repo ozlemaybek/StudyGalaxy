@@ -19,6 +19,7 @@ class ProfileFragment : Fragment() {
 
     // Bir FirebaseAuth objesi oluşturalım:
     private lateinit var auth: FirebaseAuth
+
     // view binding için:
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -51,14 +52,14 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        //Herhangi bir imageView ile popup menu
         binding.settingsButtonID.setOnClickListener {
-
-            activity?.let{
-                val popupMenu = PopupMenu(getActivity(), it)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
+            val popupMenu = PopupMenu(getActivity(),binding.settingsButtonID)
+            popupMenu.menuInflater.inflate(R.menu.profile_settings_menu,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener{ item ->
+                when(item.itemId) {
                     R.id.edit_option_id -> {
-                        val intent = Intent(getActivity(),SignInActivity::class.java)
+                        val intent = Intent(getActivity(), SignInActivity::class.java)
                         startActivity(intent)
                         true
                     }
@@ -66,45 +67,15 @@ class ProfileFragment : Fragment() {
                         Toast.makeText(getActivity(), "Goal deleted!", Toast.LENGTH_LONG).show()
                         true
                     }
-                    else -> false
                 }
+                true
             }
-
-            popupMenu.inflate(R.menu.profile_settings_menu)
-            }
-
-            /*val popupMenu = PopupMenu(getActivity(), it)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.edit_option_id -> {
-                        val intent = Intent(getActivity(),SignInActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    R.id.delete_option_id -> {
-                        Toast.makeText(getActivity(), "Goal deleted!", Toast.LENGTH_LONG).show()
-                        true
-                    }
-                    else -> false
-                }
-            }
-
-            popupMenu.inflate(R.menu.profile_settings_menu) */
-
+            popupMenu.show()
         }
+
+
 
     }
-        /*
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.edit_option_id){
-            val intent = Intent(this, EditProfileActivity::class)
-        }
-        else{
-
-        }
-        return super.onOptionsItemSelected(item)
-    }
-    */
 
     override fun onDestroyView() {
         super.onDestroyView()

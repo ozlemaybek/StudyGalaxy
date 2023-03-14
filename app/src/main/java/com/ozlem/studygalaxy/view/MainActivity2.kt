@@ -3,7 +3,6 @@ package com.ozlem.studygalaxy.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import com.ozlem.studygalaxy.*
 import com.ozlem.studygalaxy.databinding.ActivityMain2Binding
@@ -42,11 +41,15 @@ class MainActivity2 : AppCompatActivity() {
             }
             true
         }
+        // ekleme
+
+
+
+        // ekleme
+
     }
 
-    // ekleme
 
-    // ekleme
 
 
         private fun replaceFragment(fragment: Fragment) {
