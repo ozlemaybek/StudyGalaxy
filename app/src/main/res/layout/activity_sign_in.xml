@@ -31,7 +31,7 @@
         android:text="Study Galaxy"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/plain_text_username_id"
+        app:layout_constraintBottom_toTopOf="@+id/plain_text_email_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
@@ -50,11 +50,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/plain_text_username_id"
+        android:id="@+id/plain_text_email_id"
         style="@style/inputSpaceStyle"
         android:layout_marginBottom="24dp"
-        android:hint="username..."
-        android:inputType="textPersonName"
+        android:hint="email..."
+        android:inputType="textEmailAddress"
         android:paddingLeft="30dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/plain_text_password_id"

@@ -1,5 +1,6 @@
 package com.ozlem.studygalaxy.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -29,6 +30,8 @@ class ProfileFragment : Fragment() {
 
         // Oluşturduğumuz FirebaseAuth objesini initialize edelim:
         auth = Firebase.auth
+
+
     }
 
     override fun onCreateView(
@@ -44,6 +47,24 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
+        val user = Firebase.auth.currentUser
+        if(user != null){
+            Toast.makeText(getActivity(), "Kullanıcı id: +${user!!.uid} + username: ${user!!.displayName}", Toast.LENGTH_LONG).show()
+            // User is signed in
+            // İlgili alanlara bilgileri bastıralım:
+            binding.usernameTitleId.text = user.displayName
+            binding.usernameId.text = user.displayName
+            binding.emailId.text = user.email
+            // Firebase şifreye erişim vermiyor (kullanıcı gizliliği) bu yüzden bu şekilde göstereceğiz:
+            binding.passwordId.text = "******"
+        }
+        else{
+            // No user is signed in
+            Toast.makeText(getActivity(), "user null döndü", Toast.LENGTH_LONG).show()
+        }
+
+        // Uygulamadan çıkış:
         binding.logOutButtonId.setOnClickListener {
             auth.signOut()
             activity?.let {
@@ -59,12 +80,19 @@ class ProfileFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener{ item ->
                 when(item.itemId) {
                     R.id.edit_option_id -> {
-                        val intent = Intent(getActivity(), SignInActivity::class.java)
+                        val intent = Intent(getActivity(), EditProfileActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.change_password_option_id -> {
+                        val intent = Intent(getActivity(), ChangePasswordActivity::class.java)
                         startActivity(intent)
                         true
                     }
                     R.id.delete_option_id -> {
-                        Toast.makeText(getActivity(), "Goal deleted!", Toast.LENGTH_LONG).show()
+                        val intent = Intent(getActivity(), DeleteAccountActivity::class.java)
+                        startActivity(intent)
+                        //Toast.makeText(getActivity(), "Goal deleted!", Toast.LENGTH_LONG).show()
                         true
                     }
                 }

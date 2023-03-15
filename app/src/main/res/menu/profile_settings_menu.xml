@@ -6,6 +6,9 @@
         android:id="@+id/edit_option_id"
         android:title="Edit Profile" />
     <item
+        android:id="@+id/change_password_option_id"
+        android:title="Change Password"/>
+    <item
         android:id="@+id/delete_option_id"
         android:title="Delete Account" />
 

@@ -13,9 +13,21 @@
         android:theme="@style/Theme.StudyGalaxy"
         tools:targetApi="31">
         <activity
-            android:name=".view.SignUpActivity"
+            android:name=".view.ChangePasswordActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".view.DeleteAccountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".view.EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".view.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.SignInActivity"
             android:exported="true"

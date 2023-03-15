@@ -27,6 +27,20 @@ class SignInActivity : AppCompatActivity() {
 
         // Oluşturduğumuz FirebaseAuth objesini initialize edelim:
         auth = Firebase.auth
+
+        // Giriş yapmış kullanıcıyı hatırlamak:
+        // currentUser bize nullable olarak veriliyor yani oladabilir, olmayadabilir.
+        // Eğer null ise yok demektir yani firebase kullanıcının giriş yaptığını anlamamış demektir.
+        val currentUser = auth.currentUser
+
+        // Kullanıcı daha önce uygulamaya giriş yaptıysa ve uygulamayı şuan açarsa log-in ekranı gösterilmeden
+        // direkt diğer ekrana geçilecek.
+
+        if(currentUser != null){
+            val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     fun onClickSignUpText(view : View){
@@ -41,12 +55,12 @@ class SignInActivity : AppCompatActivity() {
     fun signInOnclick(view : View){
 
         // Kullanıcının girdiği username'i bir string olarak alalım:
-        val username = binding.plainTextUsernameId.text.toString()
+        val email = binding.plainTextEmailId.text.toString()
         val password = binding.plainTextPasswordId.text.toString()
 
-        if(username != "" && password != ""){
+        if(email != "" && password != ""){
             // Kayıtlı birkullanıcının sign in olması:
-            auth.signInWithEmailAndPassword(username, password) .addOnCompleteListener(this) { task ->
+            auth.signInWithEmailAndPassword(email, password) .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //Kullanıcı şu anda girdi. (current user: güncel kullanıcı)
                     val currentUser = auth.currentUser?.displayName.toString()
@@ -56,16 +70,18 @@ class SignInActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity2::class.java)
                     startActivity(intent)
                     finish()
+                }else{
+                    Toast.makeText(applicationContext,"Sign in işlemi geçersiz", Toast.LENGTH_LONG).show()
                 }
             }.addOnFailureListener{ exception ->
                 Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                exception?.printStackTrace()
+
+
             }
         }
-
-        // sign in işlemi başarılı ise diğer ekrana geçelim:
-        val intent = Intent(this, MainActivity2::class.java)
-        startActivity(intent)
-        finish()
     }
+
+
 
 }

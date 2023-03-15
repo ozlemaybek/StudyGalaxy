@@ -42,8 +42,9 @@ class SignUpActivity : AppCompatActivity() {
     fun signUpOnclick(view: View){
 
         // Sign up bilgilerini alalım:
+        // trim(): aradaki boşlukları silmesi için
         val username = binding.plainTextUsernameId.text.toString()
-        val email = binding.plainTextEmailId.text.toString()
+        val email = binding.plainTextEmailId.text.toString().trim()
         val password = binding.plainTextPasswordId.text.toString()
 
 
@@ -73,15 +74,13 @@ class SignUpActivity : AppCompatActivity() {
                         }
 
                     }
+                    // Kayıt olma işlemi başarılı ise kullanıcı ThinkActivity ekranına aktarılacak:
+                    // 1.parametre: context(bulunduğum yer)
+                    // 2.parametre: gideceğim yer
+                    val intent = Intent(this, MainActivity2::class.java)
+                    startActivity(intent) // 2.ekrana geçişi başlat
+                    finish() // bulunduğum aktiviteyi kapatıp hafızadan sil.
                 }
-
-
-                // Kayıt olma işlemi başarılı ise kullanıcı ThinkActivity ekranına aktarılacak:
-                // 1.parametre: context(bulunduğum yer)
-                // 2.parametre: gideceğim yer
-                val intent = Intent(this, MainActivity2::class.java)
-                startActivity(intent) // 2.ekrana geçişi başlat
-                finish() // bulunduğum aktiviteyi kapatıp hafızadan sil.
             }
         }.addOnFailureListener{ exception ->
             // addOnFailureListener bize bir exception yani hata veriyor.
