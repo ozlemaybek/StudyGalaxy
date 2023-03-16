@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ProfileFragment"
+    android:background="@color/app_background_color"
+    android:id="@+id/constraint_layout_id_0">
+
+    <ScrollView
+        android:id="@+id/nestedScrollViewID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <!-- Dış Çerçeve Başlıyor... -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_id_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linear_layout_id_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/page_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Create New Goal"
+                    android:textColor="@color/logo_color"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/title_id_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Goal Title"
+                    android:textColor="@color/logo_color"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/goal_title_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hint="Goal Title"
+                    android:textColorHint="@color/white"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/title_id_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Daily Goal Time"
+                    android:textColor="@color/logo_color"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/daily_goal_time_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hint="01:00"
+                    android:textColorHint="@color/white"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/title_id_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Choose Time Period"
+                    android:textColor="@color/logo_color"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_id_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:gravity="left">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/today_button_id"
+                        style="@style/allButtonStyle"
+                        android:layout_width="120dp"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:onClick="onClickTodayButton"
+                        android:text="Today" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/everyweek_button_id"
+                        style="@style/allButtonStyle"
+                        android:layout_width="120dp"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:onClick="onClickEveryweekButton"
+                        android:text="Everyweek" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameLayoutTimeID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:defaultNavHost="true"
+                        app:navGraph="@navigation/navigation_graph_goal_time" />
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/save_button_id"
+                    style="@style/allButtonStyle"
+                    android:layout_margin="10dp"
+                    android:onClick="onClickSaveButton"
+                    android:text="Save" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Dış Çerçeve Bitti ... -->
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

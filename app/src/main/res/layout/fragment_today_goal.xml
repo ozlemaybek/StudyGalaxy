@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayoutTodayID"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/app_background_color"
+    tools:context=".view.TodayGoalFragment">
+
+    <EditText
+        android:id="@+id/today_date_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:hint="16 03 2023"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"/>
+</FrameLayout>
+

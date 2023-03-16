@@ -10,6 +10,19 @@
     android:background="@color/app_background_color"
     tools:context=".view.HomeFragment">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonID"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="0dp"
+        android:clickable="true"
+        app:backgroundTint="@color/logo_color"
+        app:srcCompat="@drawable/add_icon"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_layout_id_0"
+        app:layout_constraintBottom_toBottomOf="@+id/constraint_layout_id_0"/>
+
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollViewID"
         android:layout_width="match_parent"
@@ -85,7 +98,7 @@
                             android:textSize="24sp" />
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/username_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -169,10 +182,10 @@
 
                     <TextView
                         android:id="@+id/textview_6_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="Target Time"
                         android:textAlignment="center"
@@ -181,10 +194,10 @@
 
                     <TextView
                         android:id="@+id/textview_7_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="00.00.00"
                         android:textAlignment="center"
@@ -197,8 +210,8 @@
                     android:id="@+id/line_0_id"
                     android:layout_width="4dp"
                     android:layout_height="80dp"
-                    android:background="@color/logo_color"
                     android:layout_marginStart="14dp"
+                    android:background="@color/logo_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linear_layout_id_2"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -215,10 +228,10 @@
 
                     <TextView
                         android:id="@+id/textview_8_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="Focus Time"
                         android:textAlignment="center"
@@ -227,10 +240,10 @@
 
                     <TextView
                         android:id="@+id/textview_9_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="00.00.00"
                         android:textAlignment="center"
@@ -262,10 +275,10 @@
 
                     <TextView
                         android:id="@+id/textview_10_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="Success"
                         android:textAlignment="center"
@@ -274,10 +287,10 @@
 
                     <TextView
                         android:id="@+id/textview_11_id"
-                        android:fontFamily="@font/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:text="%0"
                         android:textAlignment="center"
@@ -298,9 +311,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/constraint_layout_id_5"
-                app:layout_constraintStart_toStartOf="@+id/constraint_layout_id_1"
                 app:layout_constraintEnd_toEndOf="@+id/constraint_layout_id_1"
+                app:layout_constraintStart_toStartOf="@+id/constraint_layout_id_1"
+                app:layout_constraintTop_toBottomOf="@+id/constraint_layout_id_5"
                 tools:layout_editor_absoluteX="106dp">
 
                 <TextView
@@ -331,9 +344,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/textview_12_id">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_0_id"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/recycler_view_0_id"/>
+                        android:layout_height="match_parent" />
 
                 </FrameLayout>
 

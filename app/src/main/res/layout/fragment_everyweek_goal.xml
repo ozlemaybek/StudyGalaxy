@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayoutTodayID"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_background_color"
+    tools:context=".view.EveryweekGoalFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_0"
+        android:layout_gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/start_date_id"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:hint="16 03 2023"
+            android:textColorHint="@color/white"
+            android:textSize="18sp"/>
+
+        <View
+            android:id="@+id/line_0_id"
+            android:layout_gravity="center"
+            android:layout_width="10dp"
+            android:layout_height="2dp"
+            android:background="@color/white" />
+
+        <EditText
+            android:id="@+id/end_date_id"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:hint="20 03 2023"
+            android:textColorHint="@color/white"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_1_ID"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:text="no time limit"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_id_1"
+        android:layout_gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
+
+        <!--Buraya radio button'lar ekleyeceğim...-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/monday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickMondayButton"
+            android:text="Mon" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tuesday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickTuesdayButton"
+            android:text="Tue" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/wednesday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickWednesdayButton"
+            android:text="Wed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/thursday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickThursdayButton"
+            android:text="Thu" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/friday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickFridayButton"
+            android:text="Fri" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saturday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickSaturdayButton"
+            android:text="Sat" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sunday_button_id"
+            style="@style/unselectedButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="6dp"
+            android:onClick="onClickSundayButton"
+            android:text="Sun" />
+
+    </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBox_2_ID"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="select all"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
+
+
+
+
