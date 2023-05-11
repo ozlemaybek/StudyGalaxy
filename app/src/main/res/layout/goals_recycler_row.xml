@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textview_2_id"
+            android:id="@+id/percentage_of_completion_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textview_3_id"
+            android:id="@+id/total_daily_time_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
