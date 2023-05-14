@@ -1,16 +1,17 @@
 package com.ozlem.studygalaxy.view
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.ozlem.studygalaxy.R
 import com.ozlem.studygalaxy.databinding.FragmentTodayGoalBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -71,6 +72,7 @@ class TodayGoalFragment : Fragment() {
 
         //Burası sorun çıkarabilir!!!
                 binding.todayDateId.setOnClickListener {
+                    binding.todayDateId.hideKeyboard()
                     context?.let{DatePickerDialog(it, datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH))}!!.show()
                 }
@@ -78,8 +80,14 @@ class TodayGoalFragment : Fragment() {
         // Date Picker Dialog Try End
     }
 
+    // tarih seçmek için tıklandığında klavyeyi kapatmak için:
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     private fun updateDate(myCalendar: Calendar){
-        val dateFormat = "dd-mm-yyyy"
+        val dateFormat = "dd-MM-yyyy"
         val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
         binding.todayDateId.setText(simpleDateFormat.format(myCalendar.time))
     }

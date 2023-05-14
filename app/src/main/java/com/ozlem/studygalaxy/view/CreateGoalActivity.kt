@@ -2,7 +2,12 @@ package com.ozlem.studygalaxy.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.Spanned
+import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -26,6 +31,53 @@ class CreateGoalActivity : AppCompatActivity() {
         // Oluşturduğumuz FirebaseAuth objesini initialize edelim:
         auth = Firebase.auth
 
+        // time pick:
+        binding.dailyGoalTimeId1.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+
+                //binding.dailyGoalTimeId1.setText("Text in EditText : "+s)
+
+                    try{
+                        if (binding.dailyGoalTimeId1.getText().toString().toInt() > 23) {
+                            binding.dailyGoalTimeId1.setText("23")
+                        }
+                    }catch (e : NumberFormatException){
+                        // hint'i gösteriyor ama silip istediğimizi yapabiliyoruz.
+                        //binding.dailyGoalTimeId1.setText("01")
+                    }
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        binding.dailyGoalTimeId2.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+
+                //binding.dailyGoalTimeId1.setText("Text in EditText : "+s)
+
+                try{
+                    if (binding.dailyGoalTimeId2.getText().toString().toInt() > 59) {
+                        binding.dailyGoalTimeId2.setText("59")
+                    }
+                }catch (e : NumberFormatException){
+                    // hint'i gösteriyor ama silip istediğimizi yapabiliyoruz.
+                    //binding.dailyGoalTimeId1.setText("01")
+                }
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+
+
     }
 
     fun onClickTodayButton(view : View){
@@ -41,5 +93,4 @@ class CreateGoalActivity : AppCompatActivity() {
         val everyweekGoalFragment = EveryweekGoalFragment()
         fragmentTransaction.replace(R.id.frameLayoutTimeID , everyweekGoalFragment).commit()
     }
-
 }

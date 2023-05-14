@@ -16,7 +16,9 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/roboto_bold"
         android:hint="16 03 2023"
+        android:inputType="datetime"
         android:textColorHint="@color/white"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:textAllCaps="false"/>
 </FrameLayout>
 

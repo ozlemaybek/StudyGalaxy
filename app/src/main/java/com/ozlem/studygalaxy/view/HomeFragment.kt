@@ -95,8 +95,8 @@ class HomeFragment : Fragment() {
             val intent = Intent(getActivity(), CreateGoalActivity::class.java)
             startActivity(intent)
 
-            /*
-            val intent = Intent(getActivity(), TimeMeasurementActivity::class.java)
+
+            /*val intent = Intent(getActivity(), TimeMeasurementActivity::class.java)
             startActivity(intent)*/
             /*
             val popupMenu = PopupMenu(getActivity(), binding.floatingActionButtonID)
