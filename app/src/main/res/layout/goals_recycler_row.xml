@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textview_0_id"
+            android:id="@+id/goal_title_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textview_1_id"
+            android:id="@+id/date_range_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -57,12 +57,11 @@
         android:layout_margin="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/linear_layout_id_0"
+        app:layout_constraintEnd_toStartOf="@+id/options_button_id"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/percentage_of_completion_id"
+            android:id="@+id/success_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +73,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/total_daily_time_id"
+            android:id="@+id/focus_time_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -88,7 +87,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/options_button_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/menu_icon"

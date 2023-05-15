@@ -18,6 +18,12 @@ import java.util.*
 
 class TodayGoalFragment : Fragment() {
 
+    interface TodayDateInterface {
+
+        val todayDate : String
+
+    }
+
     // Bir FirebaseAuth objesi oluşturalım:
     private lateinit var auth: FirebaseAuth
     // view binding için:

@@ -23,6 +23,16 @@ import java.util.Locale
 
 class EveryweekGoalFragment : Fragment() {
 
+    lateinit var dataPasserEveryweek : EveryweekDateInterface
+
+    interface EveryweekDateInterface {
+
+        fun DataPasserFunc(startDate : String, endDate : String, monday : Boolean, tuesday : Boolean, wednesday : Boolean,
+                       thursday : Boolean, friday : Boolean, saturday : Boolean, sunday : Boolean)
+
+
+    }
+
     // Bir FirebaseAuth objesi oluşturalım:
     private lateinit var auth: FirebaseAuth
     // view binding için:
@@ -124,6 +134,18 @@ class EveryweekGoalFragment : Fragment() {
 
         }*/
 
+    }
+
+    // Activity'ye veri yollamak için:
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataPasserEveryweek = context as EveryweekDateInterface
+    }
+
+    fun passData(startDate : String, endDate : String, monday : Boolean, tuesday : Boolean, wednesday : Boolean,
+                 thursday : Boolean, friday : Boolean, saturday : Boolean, sunday : Boolean){
+        dataPasserEveryweek.DataPasserFunc(startDate, endDate, monday, tuesday, wednesday,
+            thursday, friday, saturday, sunday)
     }
 
     // tarih seçmek için tıklandığında klavyeyi kapatmak için:

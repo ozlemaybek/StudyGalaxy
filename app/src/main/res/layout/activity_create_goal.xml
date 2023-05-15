@@ -214,6 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
 
+                    <!--
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragmentContainerView"
                         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -221,6 +222,225 @@
                         android:layout_height="match_parent"
                         app:defaultNavHost="true"
                         app:navGraph="@navigation/navigation_graph_goal_time" />
+                    -->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_layout_id_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:visibility="visible">
+
+                        <FrameLayout
+                            android:id="@+id/frameLayoutTodayID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/app_background_color"
+                            android:layout_gravity="left"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <EditText
+                                android:id="@+id/today_date_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:hint="16 03 2023"
+                                android:inputType="datetime"
+                                android:textAllCaps="false"
+                                android:textColorHint="@color/white"
+                                android:textSize="18sp" />
+                        </FrameLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_layout_id_everyweek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:visibility="gone">
+
+                        <FrameLayout
+                            android:id="@+id/frameLayoutEveryweekID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/app_background_color"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/linear_layout_id_frame"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/linear_layout_id_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:id="@+id/start_date_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="4dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:gravity="center"
+                                        android:hint="16 03 2023"
+                                        android:inputType="datetime"
+                                        android:textColorHint="@color/white"
+                                        android:textSize="18sp" />
+
+                                    <View
+                                        android:id="@+id/line_3_id"
+                                        android:layout_width="7dp"
+                                        android:layout_height="3dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/white" />
+
+                                    <EditText
+                                        android:id="@+id/end_date_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="4dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:hint="20 03 2023"
+                                        android:inputType="datetime"
+                                        android:textColorHint="@color/white"
+                                        android:textSize="18sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linear_layout_id_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:orientation="vertical">
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_monday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="monday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_tuesday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="tuesday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_wednesday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="wednesday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_thursday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="thursday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_friday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="friday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_saturday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="saturday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                    <CheckBox
+                                        android:id="@+id/checkBox_sunday_id"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/logo_color"
+                                        android:text="sunday"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatButton

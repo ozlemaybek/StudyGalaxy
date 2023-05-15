@@ -2,6 +2,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
     <item
         android:id="@+id/complete_option_id"
         android:title="Complete"
@@ -10,6 +11,7 @@
         android:id="@+id/edit_option_id"
         android:title="Edit"
         android:icon="@drawable/edit_icon"/>
+        -->
     <item
         android:id="@+id/delete_option_id"
         android:title="Delete"

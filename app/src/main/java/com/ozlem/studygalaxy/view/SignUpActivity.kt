@@ -74,7 +74,11 @@ class SignUpActivity : AppCompatActivity() {
                         }
 
                     }
-                    // Kayıt olma işlemi başarılı ise kullanıcı ThinkActivity ekranına aktarılacak:
+
+                    // Burada ilk kez kayıt olan bir kullanıcı içindefault bir hedef oluşturacağız.
+
+
+                    // Kayıt olma işlemi başarılı ise kullanıcı MainActivity2 ekranına aktarılacak:
                     // 1.parametre: context(bulunduğum yer)
                     // 2.parametre: gideceğim yer
                     val intent = Intent(this, MainActivity2::class.java)

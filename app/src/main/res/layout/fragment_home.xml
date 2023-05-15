@@ -134,21 +134,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/today_date_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
                         android:text="22.02.2023 Wednesday"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="00.00.00"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
@@ -325,7 +315,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:text="My Daily Goals"
+                    android:text="My Goals"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
