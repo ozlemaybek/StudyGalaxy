@@ -195,7 +195,7 @@ class CreateGoalActivity : AppCompatActivity(){
 
             val todayDate = binding.todayDateId.text.toString()
             dateRange = "today"
-            val date = Timestamp.now()
+            val date = Timestamp.now().toDate().toString()
 
             val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
             val focusTime = "00:00"

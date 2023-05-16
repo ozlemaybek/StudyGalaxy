@@ -183,7 +183,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textview_7_id"
+                        android:id="@+id/all_goals_target_time_id"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -229,7 +229,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textview_9_id"
+                        android:id="@+id/all_goals_focus_time_id"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -276,7 +276,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textview_11_id"
+                        android:id="@+id/all_goals_success_id"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

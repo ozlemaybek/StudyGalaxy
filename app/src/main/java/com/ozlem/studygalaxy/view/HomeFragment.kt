@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
 
             val strList = Timestamp.now().toDate().toString().split(" ")
             val dateValue = strList[2] + " " + strList[0] + " " + strList[1]
-            binding.todayDateId.setText(dateValue)
+           // binding.todayDateId.setText(dateValue)
 
             val timeList = Timestamp.now().toDate().toString().split(" ")
             val timeValue = strList[3].split(":")
@@ -233,11 +233,60 @@ class HomeFragment : Fragment() {
             // PART 2:
             // Şimdi ana sayfada bulunan kullanıcıya ait hedef listesi ile ilgili verileri çekelim:
 
-            //val strList = Timestamp.now().toDate().toString().split(" ")
-            //val dateValue = strList[2] + "-" + strList[0] + "-" + strList[1]
-            // .whereEqualTo("todayDate",dateValue)
+            var strList = Timestamp.now().toDate().toString().split(" ")
+            var dateList = Array<String>(3){"0"}
 
-            db.collection("Goals").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ snapshot, error ->
+            dateList[0] = strList[2]
+            dateList[2] = strList[5]
+
+            if(strList[1] == "Jan"){
+                dateList[1] = "01"
+            }
+            if(strList[1] == "Feb"){
+                dateList[1] = "02"
+            }
+            if(strList[1] == "Mar"){
+                dateList[1] = "03"
+            }
+            if(strList[1] == "Apr"){
+                dateList[1] = "04"
+            }
+            if(strList[1] == "May"){
+                dateList[1] = "05"
+            }
+            if(strList[1] == "Jun"){
+                dateList[1] = "06"
+            }
+            if(strList[1] == "Jul"){
+                dateList[1] = "07"
+            }
+            if(strList[1] == "Aug"){
+                dateList[1] = "08"
+            }
+            if(strList[1] == "Sep"){
+                dateList[1] = "09"
+            }
+            if(strList[1] == "Oct"){
+                dateList[1] = "10"
+            }
+            if(strList[1] == "Nov"){
+                dateList[1] = "11"
+            }
+            if(strList[1] == "Dec"){
+                dateList[1] = "12"
+            }
+
+            val dateTime = dateList[0]+ "-" + dateList[1] + "-" + dateList[2]
+
+
+            // val dateValue = strList[2] + "-" + strList[0] + "-" + strList[1]
+            // val def = Timestamp.now().toDate().toString()
+            // .orderBy("date", Query.Direction.DESCENDING)
+
+            db.collection("Goals").whereEqualTo("todayDate",dateTime).addSnapshotListener{ snapshot, error ->
+
+                //binding.todayDateId.setText(Timestamp.now().toDate().toString())
+                binding.todayDateId.setText(dateTime)
 
                 if(error != null){
                     Toast.makeText(getActivity(), error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -256,14 +305,85 @@ class HomeFragment : Fragment() {
                             // for loop'a girmeden önce temizledik. Eğer temizlemeseydik her bir paylaşım olduğunda üstüne yazacaktı
                             // ve bir sürü paylaşım gözükecekti:
                             goalList.clear()
+
+                            var allGoalsTargetTimeHour : Int = 0
+                            var allGoalsTargetTimeSecond : Int = 0
+                            var allGoalsFocusTimeHour : Int = 0
+                            var allGoalsFocusTimeSecond : Int = 0
+                            var allGoalsSuccess : Int = 0
+
                             for (document in documents){
                                 // Bu for loop'un içinde document'lara tek tek ulaşalım.
                                 // Any geliyordu String'e çevirmek için as String
+
+                                // Burada günlük hedefleri çektik:
                                 val goalTitle = document.get("goalTitle") as String?
                                 val dateRange = document.get("dateRange") as String?
                                 val success = document.get("success") as String?
                                 val focusTime = document.get("focusTime") as String?
                                 val targetTime = document.get("targetTime") as String?
+
+                                // Burada da tüm günlük hedefler ile ilgili data hesaplarını yapacağız:
+
+                                // CALCULATE TARGET TIME (ALL OF GOALS)
+                                val targetTimeList = targetTime.toString().split(":")
+                                allGoalsTargetTimeHour += targetTimeList[0].toInt()
+                                allGoalsTargetTimeSecond += targetTimeList[1].toInt()
+
+                                // dakikaları saaate ekleme:
+                                allGoalsTargetTimeHour += allGoalsTargetTimeSecond % 60
+                                allGoalsTargetTimeSecond -= (allGoalsTargetTimeSecond % 60) * 60
+
+                                var hourTarget  : String = "0"
+                                var secondTarget : String = "0"
+                                if (allGoalsTargetTimeHour.toString().length < 2){
+                                    hourTarget = "0" + allGoalsTargetTimeHour.toString()
+                                }
+                                else{
+                                    hourTarget = allGoalsTargetTimeHour.toString()
+                                }
+                                if (allGoalsTargetTimeSecond.toString().length < 2){
+                                    secondTarget = "0" + allGoalsTargetTimeSecond.toString()
+                                }
+                                else{
+                                    secondTarget = allGoalsTargetTimeSecond.toString()
+                                }
+
+                                val newTargetTime = hourTarget + ":"+ secondTarget
+
+                                binding.allGoalsTargetTimeId.setText(newTargetTime)
+
+                                // CALCULATE FOCUS TIME (ALL OF GOALS)
+                                val focusTimeList = focusTime.toString().split(":")
+                                allGoalsFocusTimeHour += focusTimeList[0].toInt()
+                                allGoalsFocusTimeSecond += focusTimeList[1].toInt()
+
+                                // dakikaları saaate ekleme:
+                                allGoalsFocusTimeHour += allGoalsFocusTimeSecond % 60
+                                allGoalsFocusTimeSecond -= allGoalsFocusTimeSecond % 60
+
+                                var hourFocus  : String = "0"
+                                var secondFocus : String = "0"
+                                if (allGoalsFocusTimeHour.toString().length < 2){
+                                    hourFocus = "0" + allGoalsFocusTimeHour.toString()
+                                }
+                                if(allGoalsFocusTimeSecond.toString().length < 2){
+                                    secondFocus = "0" + allGoalsFocusTimeSecond.toString()
+                                }
+
+                                val newFocusTime = hourFocus + ":"+ secondFocus
+
+                                binding.allGoalsFocusTimeId.setText(newFocusTime)
+
+                                // CALCULATE SUCCESS (ALL OF GOALS)
+                                if(hourTarget.toInt() == 0 && secondTarget.toInt() == 0){
+                                    binding.allGoalsSuccessId.setText("%" + "0")
+                                }
+                                else{
+                                    allGoalsSuccess = (((hourFocus.toInt() * 60) + (secondFocus.toInt())) / ((hourTarget.toInt() * 60) + (secondTarget.toInt()))) * 100
+                                    binding.allGoalsSuccessId.setText("%" + allGoalsSuccess.toString())
+                                }
+
 
                                 val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
                                 goalList.add(downloadedGoals)

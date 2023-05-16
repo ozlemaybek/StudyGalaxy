@@ -1,4 +1,4 @@
 package com.ozlem.studygalaxy.model
 
-class AllGoals (val focusTime : String?, val success : String?, val targetTime : String?) {
+class AllGoals (val targetTime : String?, val focusTime : String?, val success : String?) {
 }
