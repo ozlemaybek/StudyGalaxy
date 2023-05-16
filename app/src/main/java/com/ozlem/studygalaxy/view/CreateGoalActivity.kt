@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.ozlem.studygalaxy.databinding.ActivityCreateGoalBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
@@ -246,6 +247,10 @@ class CreateGoalActivity : AppCompatActivity(){
             val dailyGoalTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
 
             val startDate = binding.startDateId.text.toString()
+
+           // val startDate = Timestamp(Date(binding.startDateId.text.toString())).toDate()
+           // val endDate = Timestamp(Date((binding.endDateId.text.toString()))).toDate()
+
             val endDate = binding.endDateId.text.toString()
             dateRange = "everyweek"
             val date = Timestamp.now()

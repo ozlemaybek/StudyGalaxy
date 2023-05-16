@@ -42,6 +42,8 @@ class HomeFragment : Fragment() {
     // RecyclerView Adapter'ımızı tanımlayalım:
     // recyclerViewAdapter bir GoalRecylerAdapter olacak:
     private lateinit var recyclerViewAdapter : GoalRecyclerAdapter
+    // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
+    val user = Firebase.auth.currentUser
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
-        val user = Firebase.auth.currentUser
+        //val user = Firebase.auth.currentUser
         if(user != null){
 
             // Güncel tarihi firebase'den çekelim:
@@ -233,6 +235,8 @@ class HomeFragment : Fragment() {
             // PART 2:
             // Şimdi ana sayfada bulunan kullanıcıya ait hedef listesi ile ilgili verileri çekelim:
 
+
+            // TODAY GOALS
             var strList = Timestamp.now().toDate().toString().split(" ")
             var dateList = Array<String>(3){"0"}
 
@@ -276,17 +280,25 @@ class HomeFragment : Fragment() {
                 dateList[1] = "12"
             }
 
+            // bugünün tarihi:
             val dateTime = dateList[0]+ "-" + dateList[1] + "-" + dateList[2]
+            // Home page'de bugünün tarihinin görünmesini sağlıyor:
+            binding.todayDateId.setText(dateTime)
 
+            // startDate:
+            //db.collection("Goals").whereGreaterThanOrEqualTo("startDate", dateTime)
+            // endDate:
+            //Timestamp.now().compareTo()
+            //dateTime.to
 
-            // val dateValue = strList[2] + "-" + strList[0] + "-" + strList[1]
             // val def = Timestamp.now().toDate().toString()
             // .orderBy("date", Query.Direction.DESCENDING)
 
-            db.collection("Goals").whereEqualTo("todayDate",dateTime).addSnapshotListener{ snapshot, error ->
+            // Önce veri çekmek için gerekli değişkenleri local'de tanımlayalım:
 
-                //binding.todayDateId.setText(Timestamp.now().toDate().toString())
-                binding.todayDateId.setText(dateTime)
+
+            // Her hafta için tanımlı hedefleri veritabanından çekiyoruz:
+            db.collection("Goals").whereEqualTo("dateRange", "everyweek").whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
 
                 if(error != null){
                     Toast.makeText(getActivity(), error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -384,6 +396,7 @@ class HomeFragment : Fragment() {
                                     binding.allGoalsSuccessId.setText("%" + allGoalsSuccess.toString())
                                 }
 
+                                // BURADA KRONOMETRE İŞLEMLERİ TUTULMALI:
 
                                 val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
                                 goalList.add(downloadedGoals)
@@ -393,6 +406,124 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
+
+            }
+
+            // Bugün için tanımlı hedefleri çekiyoruz:
+            db.collection("Goals").whereEqualTo("todayDate",dateTime).whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
+
+                    //binding.todayDateId.setText(Timestamp.now().toDate().toString())
+                    binding.todayDateId.setText(dateTime)
+
+                    if(error != null){
+                        Toast.makeText(getActivity(), error.localizedMessage, Toast.LENGTH_LONG).show()
+                    }else{
+                        // Hata mesajı yoksa büyük ihtimalle snapshot'ımız gelmiştir.
+                        // Fakat snapshot bize ? yani nullable olarak geliyor. Bu yüzden if ekleyelim:
+                        if(snapshot != null){
+                            // Burada snapshot'ım null olmayabilir ama içinde bir doküman olmayabilir.
+                            // isEmpty() ile gittiğimiz cllection'ın içinde bir document var mı yok mu öğrenebiliriz.
+                            // Kontrol ediyoruz çünkü içinde document olmayan bir collection'ada gitmiş olabiliriz.
+                            // Eğer boşsa true döner:
+                            if(!snapshot.isEmpty){
+                                // Hem snapshot null değil, hem hata mesajı yok hem de içinde document var:
+                                // Aşağıdaki documents değişkeni collection içindeki tüm document'ları barındıran bir dizi:
+                                val documents = snapshot.documents
+                                // for loop'a girmeden önce temizledik. Eğer temizlemeseydik her bir paylaşım olduğunda üstüne yazacaktı
+                                // ve bir sürü paylaşım gözükecekti:
+                                goalList.clear()
+
+                                var allGoalsTargetTimeHour : Int = 0
+                                var allGoalsTargetTimeSecond : Int = 0
+                                var allGoalsFocusTimeHour : Int = 0
+                                var allGoalsFocusTimeSecond : Int = 0
+                                var allGoalsSuccess : Int = 0
+
+                                for (document in documents){
+                                    // Bu for loop'un içinde document'lara tek tek ulaşalım.
+                                    // Any geliyordu String'e çevirmek için as String
+
+                                    // Burada günlük hedefleri çektik:
+                                    val goalTitle = document.get("goalTitle") as String?
+                                    val dateRange = document.get("dateRange") as String?
+                                    val success = document.get("success") as String?
+                                    val focusTime = document.get("focusTime") as String?
+                                    val targetTime = document.get("targetTime") as String?
+
+                                    // Burada da tüm günlük hedefler ile ilgili data hesaplarını yapacağız:
+
+                                    // CALCULATE TARGET TIME (ALL OF GOALS)
+                                    val targetTimeList = targetTime.toString().split(":")
+                                    allGoalsTargetTimeHour += targetTimeList[0].toInt()
+                                    allGoalsTargetTimeSecond += targetTimeList[1].toInt()
+
+                                    // dakikaları saaate ekleme:
+                                    allGoalsTargetTimeHour += allGoalsTargetTimeSecond % 60
+                                    allGoalsTargetTimeSecond -= (allGoalsTargetTimeSecond % 60) * 60
+
+                                    var hourTarget  : String = "0"
+                                    var secondTarget : String = "0"
+                                    if (allGoalsTargetTimeHour.toString().length < 2){
+                                        hourTarget = "0" + allGoalsTargetTimeHour.toString()
+                                    }
+                                    else{
+                                        hourTarget = allGoalsTargetTimeHour.toString()
+                                    }
+                                    if (allGoalsTargetTimeSecond.toString().length < 2){
+                                        secondTarget = "0" + allGoalsTargetTimeSecond.toString()
+                                    }
+                                    else{
+                                        secondTarget = allGoalsTargetTimeSecond.toString()
+                                    }
+
+                                    val newTargetTime = hourTarget + ":"+ secondTarget
+
+                                    binding.allGoalsTargetTimeId.setText(newTargetTime)
+
+                                    // CALCULATE FOCUS TIME (ALL OF GOALS)
+                                    val focusTimeList = focusTime.toString().split(":")
+                                    allGoalsFocusTimeHour += focusTimeList[0].toInt()
+                                    allGoalsFocusTimeSecond += focusTimeList[1].toInt()
+
+                                    // dakikaları saaate ekleme:
+                                    allGoalsFocusTimeHour += allGoalsFocusTimeSecond % 60
+                                    allGoalsFocusTimeSecond -= allGoalsFocusTimeSecond % 60
+
+                                    var hourFocus  : String = "0"
+                                    var secondFocus : String = "0"
+                                    if (allGoalsFocusTimeHour.toString().length < 2){
+                                        hourFocus = "0" + allGoalsFocusTimeHour.toString()
+                                    }
+                                    if(allGoalsFocusTimeSecond.toString().length < 2){
+                                        secondFocus = "0" + allGoalsFocusTimeSecond.toString()
+                                    }
+
+                                    val newFocusTime = hourFocus + ":"+ secondFocus
+
+                                    binding.allGoalsFocusTimeId.setText(newFocusTime)
+
+                                    // CALCULATE SUCCESS (ALL OF GOALS)
+                                    if(hourTarget.toInt() == 0 && secondTarget.toInt() == 0){
+                                        binding.allGoalsSuccessId.setText("%" + "0")
+                                    }
+                                    else{
+                                        allGoalsSuccess = (((hourFocus.toInt() * 60) + (secondFocus.toInt())) / ((hourTarget.toInt() * 60) + (secondTarget.toInt()))) * 100
+                                        binding.allGoalsSuccessId.setText("%" + allGoalsSuccess.toString())
+                                    }
+
+                                    // BURADA KRONOMETRE İŞLEMLERİ TUTULMALI:
+
+                                    val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
+                                    goalList.add(downloadedGoals)
+                                }
+                                // Yeni veri geldi haberin olsun diyoruz böylece recylerView verileri göstermeye çalışacak:
+                                recyclerViewAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+
+
             }
         }
 
