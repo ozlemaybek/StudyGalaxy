@@ -1,5 +1,6 @@
 package com.ozlem.studygalaxy.view
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -113,8 +115,6 @@ class HomeFragment : Fragment() {
             recyclerViewAdapter = GoalRecyclerAdapter(goalList)
             binding.recyclerView0Id.adapter = recyclerViewAdapter
 
-            // Kullanıcı ilk kez oturum açıyorsa default bir hedef oluşturmalıyız:
-
         }
         else{
             // No user is signed in
@@ -148,12 +148,19 @@ class HomeFragment : Fragment() {
         }
 
         //Herhangi bir imageView ile popup menu (hedeflerin menüsü için: ama şu anda document id'yi elde edemedim.)
-        /*
-        binding.recyclerView0Id.findViewById<ImageView>(R.id.options_button_id).setOnClickListener {
+
+        /*binding.recyclerView0Id.findViewById<ImageView>(R.id.options_button_id).setOnClickListener {
+
             val popupMenu = PopupMenu(getActivity(),it)
             popupMenu.menuInflater.inflate(R.menu.goals_menu,popupMenu.menu)
             popupMenu.setOnMenuItemClickListener{ item ->
+
                 when(item.itemId) {
+                    R.id.measure_time_id -> {
+                        val intent = Intent(getActivity(), TimeMeasurementActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
                     /*R.id.complete_option_id -> {
                         //val intent = Intent(getActivity(), EditProfileActivity::class.java)
                         //startActivity(intent)
@@ -164,7 +171,7 @@ class HomeFragment : Fragment() {
                         //startActivity(intent)
                         true
                     }*/
-                    R.id.delete_option_id -> {
+                    /*R.id.delete_option_id -> {
                         //val intent = Intent(getActivity(), DeleteAccountActivity::class.java)
                         //startActivity(intent)
                         //Toast.makeText(getActivity(), "Goal deleted!", Toast.LENGTH_LONG).show()
@@ -176,7 +183,7 @@ class HomeFragment : Fragment() {
                             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
 
                         true
-                    }
+                    }*/
                 }
                 true
             }
@@ -190,51 +197,12 @@ class HomeFragment : Fragment() {
     fun firebase_get_data(){
         // Database'den veri çekelim:
 
-        // PART 1:
-        // Home Page'deki tüm hedeflere dair bilgileri çekiyoruz:
-
-        /*
-        if(db.collection("AllGoals") != null){
-            db.collection("AllGoals").addSnapshotListener{ snapshot , error ->
-
-                if(error != null){
-                    Toast.makeText(getActivity(), error.localizedMessage, Toast.LENGTH_LONG).show()
-                }else{
-                    // Hata mesajı yoksa büyük ihtimalle snapshot'ımız gelmiştir.
-                    // Fakat snapshot bize ? yani nullable olarak geliyor. Bu yüzden if ekleyelim:
-                    if(snapshot != null){
-                        // Burada snapshot'ım null olmayabilir ama içinde bir doküman olmayabilir.
-                        // isEmpty() ile gittiğimiz cllection'ın içinde bir document var mı yok mu öğrenebiliriz.
-                        // Kontrol ediyoruz çünkü içinde document olmayan bir collection'ada gitmiş olabiliriz.
-                        // Eğer boşsa true döner:
-                        if(!snapshot.isEmpty){
-                            // Hem snapshot null değil, hem hata mesajı yok hem de içinde document var:
-                            // Aşağıdaki documents değişkeni collection içindeki tüm document'ları barındıran bir dizi:
-                            val documents = snapshot.documents
-                            // for loop'a girmeden önce temizledik. Eğer temizlemeseydik her bir paylaşım olduğunda üstüne yazacaktı
-                            // ve bir sürü paylaşım gözükecekti:
-                            allGoalList.clear()
-                            for (document in documents){
-                                // Bu for loop'un içinde document'lara tek tek ulaşalım.
-                                // Any geliyordu String'e çevirmek için as String dedik:
-                                val focusTime = document.get("focusTime") as String?
-                                val success = document.get("success") as String?
-                                val targetTime = document.get("targetTime") as String?
-                                val downloadedAllGoals = AllGoals(focusTime, success, targetTime)
-                                allGoalList.add(downloadedAllGoals)
-                            }
-                            // Yeni veri geldi haberin olsun diyoruz böylece recylerView verileri göstermeye çalışacak:
-                            recyclerViewAdapter.notifyDataSetChanged()
-                        }
-                    }
-                }
-            }
-        }*/
+        // Veri çekmeden önce hedef listesini temizleyelim:
+        goalList.clear()
 
         if(db.collection("Goals")!=null){
-            // PART 2:
-            // Şimdi ana sayfada bulunan kullanıcıya ait hedef listesi ile ilgili verileri çekelim:
 
+            // Şimdi ana sayfada bulunan kullanıcıya ait hedef listesi ile ilgili verileri çekelim:
 
             // TODAY GOALS
             var strList = Timestamp.now().toDate().toString().split(" ")
@@ -295,8 +263,17 @@ class HomeFragment : Fragment() {
             // .orderBy("date", Query.Direction.DESCENDING)
 
             // Önce veri çekmek için gerekli değişkenleri local'de tanımlayalım:
+            var allGoalsTargetTimeHour : Int = 0
+            var allGoalsTargetTimeSecond : Int = 0
+            var allGoalsFocusTimeHour : Int = 0
+            var allGoalsFocusTimeSecond : Int = 0
+            var allGoalsSuccess : Int = 0
+            var hourFocus  : String = "0"
+            var secondFocus : String = "0"
+            var hourTarget  : String = "0"
+            var secondTarget : String = "0"
 
-
+            /*
             // Her hafta için tanımlı hedefleri veritabanından çekiyoruz:
             db.collection("Goals").whereEqualTo("dateRange", "everyweek").whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
 
@@ -316,13 +293,7 @@ class HomeFragment : Fragment() {
                             val documents = snapshot.documents
                             // for loop'a girmeden önce temizledik. Eğer temizlemeseydik her bir paylaşım olduğunda üstüne yazacaktı
                             // ve bir sürü paylaşım gözükecekti:
-                            goalList.clear()
-
-                            var allGoalsTargetTimeHour : Int = 0
-                            var allGoalsTargetTimeSecond : Int = 0
-                            var allGoalsFocusTimeHour : Int = 0
-                            var allGoalsFocusTimeSecond : Int = 0
-                            var allGoalsSuccess : Int = 0
+                            // goalList.clear()
 
                             for (document in documents){
                                 // Bu for loop'un içinde document'lara tek tek ulaşalım.
@@ -346,8 +317,7 @@ class HomeFragment : Fragment() {
                                 allGoalsTargetTimeHour += allGoalsTargetTimeSecond % 60
                                 allGoalsTargetTimeSecond -= (allGoalsTargetTimeSecond % 60) * 60
 
-                                var hourTarget  : String = "0"
-                                var secondTarget : String = "0"
+
                                 if (allGoalsTargetTimeHour.toString().length < 2){
                                     hourTarget = "0" + allGoalsTargetTimeHour.toString()
                                 }
@@ -361,9 +331,6 @@ class HomeFragment : Fragment() {
                                     secondTarget = allGoalsTargetTimeSecond.toString()
                                 }
 
-                                val newTargetTime = hourTarget + ":"+ secondTarget
-
-                                binding.allGoalsTargetTimeId.setText(newTargetTime)
 
                                 // CALCULATE FOCUS TIME (ALL OF GOALS)
                                 val focusTimeList = focusTime.toString().split(":")
@@ -374,8 +341,6 @@ class HomeFragment : Fragment() {
                                 allGoalsFocusTimeHour += allGoalsFocusTimeSecond % 60
                                 allGoalsFocusTimeSecond -= allGoalsFocusTimeSecond % 60
 
-                                var hourFocus  : String = "0"
-                                var secondFocus : String = "0"
                                 if (allGoalsFocusTimeHour.toString().length < 2){
                                     hourFocus = "0" + allGoalsFocusTimeHour.toString()
                                 }
@@ -383,23 +348,8 @@ class HomeFragment : Fragment() {
                                     secondFocus = "0" + allGoalsFocusTimeSecond.toString()
                                 }
 
-                                val newFocusTime = hourFocus + ":"+ secondFocus
 
-                                binding.allGoalsFocusTimeId.setText(newFocusTime)
 
-                                // CALCULATE SUCCESS (ALL OF GOALS)
-                                if(hourTarget.toInt() == 0 && secondTarget.toInt() == 0){
-                                    binding.allGoalsSuccessId.setText("%" + "0")
-                                }
-                                else{
-                                    allGoalsSuccess = (((hourFocus.toInt() * 60) + (secondFocus.toInt())) / ((hourTarget.toInt() * 60) + (secondTarget.toInt()))) * 100
-                                    binding.allGoalsSuccessId.setText("%" + allGoalsSuccess.toString())
-                                }
-
-                                // BURADA KRONOMETRE İŞLEMLERİ TUTULMALI:
-
-                                val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
-                                goalList.add(downloadedGoals)
                             }
                             // Yeni veri geldi haberin olsun diyoruz böylece recylerView verileri göstermeye çalışacak:
                             recyclerViewAdapter.notifyDataSetChanged()
@@ -407,11 +357,39 @@ class HomeFragment : Fragment() {
                     }
                 }
 
+                // Bu işlem en son yapılmalı iki sorgununda sonunda yerleştir::::::::::::::::
+                val newTargetTime = hourTarget + ":"+ secondTarget
 
-            }
+                binding.allGoalsTargetTimeId.setText(newTargetTime)
+
+
+                val newFocusTime = hourFocus + ":"+ secondFocus
+
+                binding.allGoalsFocusTimeId.setText(newFocusTime)
+
+                // CALCULATE SUCCESS (ALL OF GOALS)
+                if(hourTarget.toInt() == 0 && secondTarget.toInt() == 0){
+                    binding.allGoalsSuccessId.setText("%" + "0")
+                }
+                else{
+                    allGoalsSuccess = (((hourFocus.toInt() * 60) + (secondFocus.toInt())) / ((hourTarget.toInt() * 60) + (secondTarget.toInt()))) * 100
+                    binding.allGoalsSuccessId.setText("%" + allGoalsSuccess.toString())
+                }
+
+                // BURADA KRONOMETRE İŞLEMLERİ TUTULMALI:
+
+                val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
+                goalList.add(downloadedGoals)
+
+
+
+            }*/
 
             // Bugün için tanımlı hedefleri çekiyoruz:
-            db.collection("Goals").whereEqualTo("todayDate",dateTime).whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
+            // kullanıcının sadece o gün olan hedefleri
+            // db.collection("Goals").whereEqualTo("todayDate",dateTime).whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
+            // Kullanıcının zaman aralığı farketmeksizin tüm hedefleri:
+            db.collection("Goals").whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
 
                     //binding.todayDateId.setText(Timestamp.now().toDate().toString())
                     binding.todayDateId.setText(dateTime)
@@ -527,12 +505,13 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    }
+}
+
+
+

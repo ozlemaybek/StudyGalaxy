@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -14,9 +15,13 @@ import com.ozlem.studygalaxy.model.Goals
 import com.ozlem.studygalaxy.view.ChangePasswordActivity
 import com.ozlem.studygalaxy.view.DeleteAccountActivity
 import com.ozlem.studygalaxy.view.EditProfileActivity
+import com.ozlem.studygalaxy.view.GoalClickListener
+import com.ozlem.studygalaxy.view.HomeFragment
+import com.ozlem.studygalaxy.view.TimeMeasurementActivity
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
-class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapter<GoalRecyclerAdapter.GoalHolder>(){
+class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapter<GoalRecyclerAdapter.GoalHolder>(), GoalClickListener{
 
     // RecyclerView.ViewHolder sınıfı bizden bir view istiyor.
     // Bu view'uda constructor'ın içinde alalım (itemview)
@@ -45,6 +50,10 @@ class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapt
         holder.itemView.findViewById<TextView>(R.id.success_id).text = goalList[position].success
         holder.itemView.findViewById<TextView>(R.id.focus_time_id).text = goalList[position].focusTime
 
+        holder.itemView.findViewById<ImageView>(R.id.options_button_id).setOnClickListener {
+            //val intent = Intent(parent.context, TimeMeasurementActivity::class.java)
+
+        }
      }
 
     // recylerView'da kaç tane row göstereceğimizi belirliyoruz.
@@ -52,6 +61,17 @@ class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapt
     override fun getItemCount(): Int {
         // Kaç tane goal varsa recyclerview'da o kadar satır olacak:
         return goalList.size
+    }
+
+    override fun goalClicked(view: View) {
+        /*
+        // Besinlerden birine tıklanınca ne olacak burada yazacağız.
+        val uuid = view.food_uuid.text.toString().toIntOrNull()
+        uuid?.let {
+            val intent = Intent( parent.context , TimeMeasurementActivity::class.java)
+            //val action = FoodListFragmentDirections.actionFoodListFragmentToFoodDetailFragment(it)
+            // Navigation.findNavController(view).navigate(action)
+        }*/
     }
 
 }
