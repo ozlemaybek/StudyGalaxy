@@ -160,7 +160,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textview_7_id"
+                    android:id="@+id/goal_target_time_id"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -247,13 +247,13 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:text="Total Time"
+                    android:text="Focus Time"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textview_11_id"
+                    android:id="@+id/goal_focus_time_id"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"

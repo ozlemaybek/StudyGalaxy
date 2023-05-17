@@ -428,6 +428,8 @@ class HomeFragment : Fragment() {
                                     val success = document.get("success") as String?
                                     val focusTime = document.get("focusTime") as String?
                                     val targetTime = document.get("targetTime") as String?
+                                    val remainingTime = document.get("remainingTime") as String?
+                                    val sessionTime = document.get("sessionTime") as String?
 
                                     // Burada da tüm günlük hedefler ile ilgili data hesaplarını yapacağız:
 
@@ -491,8 +493,10 @@ class HomeFragment : Fragment() {
                                     }
 
                                     // BURADA KRONOMETRE İŞLEMLERİ TUTULMALI:
+                                    // Yani remainingTime ve sessionTime'ı hesaplayacağız:
 
-                                    val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime)
+
+                                    val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime, remainingTime, sessionTime)
                                     goalList.add(downloadedGoals)
                                 }
                                 // Yeni veri geldi haberin olsun diyoruz böylece recylerView verileri göstermeye çalışacak:

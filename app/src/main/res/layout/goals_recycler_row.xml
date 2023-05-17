@@ -13,7 +13,7 @@
     android:layout_margin="20dp"
     android:layout_marginTop="20dp"
     android:background="@drawable/info_space_style">
-    
+
 
     <LinearLayout
         android:id="@+id/linear_layout_id_0"

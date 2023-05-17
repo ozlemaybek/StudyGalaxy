@@ -50,8 +50,11 @@ class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapt
         holder.itemView.findViewById<TextView>(R.id.success_id).text = goalList[position].success
         holder.itemView.findViewById<TextView>(R.id.focus_time_id).text = goalList[position].focusTime
 
-        holder.itemView.findViewById<ImageView>(R.id.options_button_id).setOnClickListener {
-            //val intent = Intent(parent.context, TimeMeasurementActivity::class.java)
+
+        // recyclerView'un herhangi bir row'una tıklandığında kronometre activity'sine geçiliyor:
+        holder.itemView.setOnClickListener { v ->
+            val intent = Intent(v.context, TimeMeasurementActivity::class.java)
+            v.context.startActivity(intent)
 
         }
      }
