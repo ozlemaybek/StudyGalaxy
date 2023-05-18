@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    // sharingLsit bir arraylist olacak ve içinde Sharing objelerini tutacak:
+    // goalList bir arraylist olacak ve içinde Sharing objelerini tutacak:
     var goalList = ArrayList<Goals>()
     var allGoalList = ArrayList<AllGoals>()
     // RecyclerView Adapter'ımızı tanımlayalım:

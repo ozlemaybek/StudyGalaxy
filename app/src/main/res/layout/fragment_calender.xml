@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraint_layout_id_0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CalenderFragment">
+    tools:context=".view.CalenderFragment"
+    android:background="@color/app_background_color">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--text view for displaying the selected date-->
+
+    <!-- Add CalendarView to display the Calendar -->
+
+    <CalendarView
+        android:id="@+id/calender_view_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/current_date_id"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="310dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_date_id"
+        app:layout_constraintVertical_bias="0.0" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/current_date_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Current Date"
+        android:textAlignment="center"
+        android:textColor="@color/logo_color"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="40dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

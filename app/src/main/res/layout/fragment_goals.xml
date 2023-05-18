@@ -7,16 +7,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/constraint_layout_id_0"
-    android:background="@color/white"
-    tools:context=".view.GoalsFragment">
+    tools:context=".view.GoalsFragment"
+    android:background="@color/app_background_color">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:clickable="true"
-        app:backgroundTint="@color/logo_color"
-        app:srcCompat="@drawable/add_icon"
-        tools:layout_editor_absoluteX="323dp"
-        tools:layout_editor_absoluteY="643dp" />
+    <TextView
+        android:id="@+id/textView_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:text="My Goals"
+        android:textColor="@color/logo_color"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp">
+
+    </TextView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout3ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_id"
+        android:layout_margin="10dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_0_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
