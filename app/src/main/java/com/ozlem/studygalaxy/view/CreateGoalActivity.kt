@@ -200,6 +200,7 @@ class CreateGoalActivity : AppCompatActivity(){
 
             val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
             val focusTime = "00:00"
+            val remainingTime = targetTime
             val success = "%0"
 
             val username = Firebase.auth.currentUser?.displayName.toString()
@@ -222,6 +223,7 @@ class CreateGoalActivity : AppCompatActivity(){
             goalMap.put("date", date)
             goalMap.put("targetTime", targetTime)
             goalMap.put("focusTime", focusTime)
+            goalMap.put("remainingTime", remainingTime)
             goalMap.put("success", success)
 
 
@@ -265,6 +267,7 @@ class CreateGoalActivity : AppCompatActivity(){
 
             val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
             val focusTime = "00:00"
+            val remainingTime = targetTime
             val success = "%0"
 
             val username = Firebase.auth.currentUser?.displayName.toString()
@@ -315,6 +318,7 @@ class CreateGoalActivity : AppCompatActivity(){
             goalMap.put("sunday", sunday)
             goalMap.put("targetTime", targetTime)
             goalMap.put("focusTime", focusTime)
+            goalMap.put("remainingTime", remainingTime)
             goalMap.put("success", success)
 
 

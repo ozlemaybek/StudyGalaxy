@@ -1,22 +1,17 @@
 package com.ozlem.studygalaxy.view
 
-import android.content.ContentValues.TAG
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ozlem.studygalaxy.adapter.GoalRecyclerAdapter
 import com.ozlem.studygalaxy.databinding.ActivityTimeMeasurementBinding
-import com.ozlem.studygalaxy.model.AllGoals
 import com.ozlem.studygalaxy.model.Goals
 
 class TimeMeasurementActivity : AppCompatActivity() {
@@ -38,6 +33,9 @@ class TimeMeasurementActivity : AppCompatActivity() {
     private lateinit var recyclerViewAdapter : GoalRecyclerAdapter
     // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
     val user = Firebase.auth.currentUser
+
+    // document path'i almak için:
+    var documentPath : String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -79,6 +77,70 @@ class TimeMeasurementActivity : AppCompatActivity() {
             binding.pauseButtonId.visibility = View.GONE
             // ve start butonunu aktive etmeliyiz:
             binding.startButtonId.visibility = View.VISIBLE
+
+
+
+            // Şimdi süre kaydetme işlemini yapalım. Firestore'a data gönderelim:
+            // session time'ı alalım:
+            val sessionTimeValue = binding.chronometerId.text.toString()
+
+            var sessionTimeValueList = sessionTimeValue.split(":")
+            var sessionHour = sessionTimeValueList[0].toInt()
+            var sessionSecond = sessionTimeValueList[1].toInt()
+
+            // target time'ı alalım:
+            val targetTimeValue = binding.goalTargetTimeId.text.toString()
+
+            var targetTimeValueList = targetTimeValue.split(":")
+            var targetHour = targetTimeValueList[0].toInt()
+            var targetSecond = targetTimeValueList[1].toInt()
+
+            // focus time'ı alalım:
+            val focusTimeValue = binding.goalFocusTimeId.text.toString()
+
+            var focusTimeValueList = focusTimeValue.split(":")
+            var focusHour = focusTimeValueList[0].toInt()
+            var focusSecond = focusTimeValueList[1].toInt()
+
+            var focusTimeHour = focusHour.toInt() + sessionHour.toInt()
+            var focusTimeSecond = focusSecond.toInt() + sessionSecond.toInt()
+
+            // dakikaları saaate ekleme:
+            focusTimeHour += focusTimeSecond % 60
+            focusTimeSecond -= (focusTimeSecond % 60) * 60
+
+            val newFocusTime = focusTimeHour.toString() + ":" + focusTimeSecond.toString()
+
+            // Remaining Time Hesapları:
+            val remainingTimeValue = binding.goalRemainingTimeId.text.toString()
+
+            var remainingTimeValueList = remainingTimeValue.split(":")
+            var remainingHour = remainingTimeValueList[0].toInt()
+            var remainingSecond = remainingTimeValueList[1].toInt()
+
+            var remainingTimeHour = targetHour.toInt() - focusTimeHour.toInt()
+            var remainingTimeSecond = targetSecond.toInt() + focusTimeSecond.toInt()
+
+            val newRemainingTime = remainingTimeHour.toString() + ":" + remainingTimeSecond.toString()
+
+
+            // adapter'dan goalTitle değerini çekelim:
+            val valueGoalTitle = intent.getStringExtra("valueGoalTitle")
+
+            // güncel
+            valueGoalTitle?.let { it ->
+                db.collection("Goals").document(documentPath)
+                    .update(
+                        mapOf(
+                            "focusTime" to newFocusTime,
+                            "remainingTime" to newRemainingTime,
+                        ),
+                    )
+            }
+
+
+
+
         }
 
         // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
@@ -114,20 +176,14 @@ class TimeMeasurementActivity : AppCompatActivity() {
             //binding.usernameId.text = user.displayName
 
 
- /*           if(firebase_get_data()!=null){
+            if(firebase_get_data()!=null){
                 firebase_get_data()
             }
-*/
-            // Bir layout manager oluşturduk.
-            // Bu şunu sağlıyor: RecylerView'da elemanlar alt alta mı gösterilsin grid layout olarakmı gösterilsin bunu seçiyoruz.
-            // Biz alt alta göstereceğiz.
-            /*
-            val layoutManager = LinearLayoutManager(getActivity())
-            binding.recyclerView0Id.layoutManager = layoutManager
+
 
             // recyclerViewAdapter'ı initialize edelim:
             recyclerViewAdapter = GoalRecyclerAdapter(goalList)
-            binding.recyclerView0Id.adapter = recyclerViewAdapter*/
+
 
         }
         else{
@@ -139,100 +195,74 @@ class TimeMeasurementActivity : AppCompatActivity() {
 
     fun firebase_get_data(){
 
-        // Database'den veri çekelim:
-        val documentID = db.collection("Goals").document().getId()
-        val docRef = db.collection("Goals").document(documentID)
+        if(db.collection("Goals")!=null){
 
-        if(documentID !=null){
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-
-                        val goalTitle = document.get("goalTitle") as String?
-                        val dateRange = document.get("dateRange") as String?
-                        val success = document.get("success") as String?
-                        val focusTime = document.get("focusTime") as String?
-                        val targetTime = document.get("targetTime") as String?
-                        val remainingTime = document.get("remainingTime") as String?
-                        val sessionTime = document.get("sessionTime") as String?
-
-                        // Önce hedef ismini yazdıralım:
-                        binding.pageNameId.setText(goalTitle)
-
-                        var goalTargetTimeHour : Int = 0
-                        var goalTargetTimeSecond : Int = 0
-                        var goalFocusTimeHour : Int = 0
-                        var goalFocusTimeSecond : Int = 0
-                        // var goalSuccess : Int = 0
-                        var goalSessionTimeHour : Int = 0
-                        var goalSessionTimeSecond : Int = 0
-                        var goalRemainingTimeHour : Int = 0
-                        var goalRemainingTimeSecond : Int = 0
+            db.collection("Goals").whereEqualTo("username", user?.displayName).addSnapshotListener{ snapshot, error ->
 
 
-                        // Şimdi targetTime'ı çekelim:
-                        // CALCULATE TARGET TIME (ALL OF GOALS)
-                        val targetTimeList = targetTime.toString().split(":")
-                        goalTargetTimeHour += targetTimeList[0].toInt()
-                        goalTargetTimeSecond += targetTimeList[1].toInt()
+                if(error != null){
+                    Toast.makeText(this, error.localizedMessage, Toast.LENGTH_LONG).show()
+                }else{
+                    // Hata mesajı yoksa büyük ihtimalle snapshot'ımız gelmiştir.
+                    // Fakat snapshot bize ? yani nullable olarak geliyor. Bu yüzden if ekleyelim:
+                    if(snapshot != null){
+                        // Burada snapshot'ım null olmayabilir ama içinde bir doküman olmayabilir.
+                        // isEmpty() ile gittiğimiz cllection'ın içinde bir document var mı yok mu öğrenebiliriz.
+                        // Kontrol ediyoruz çünkü içinde document olmayan bir collection'ada gitmiş olabiliriz.
+                        // Eğer boşsa true döner:
+                        if(!snapshot.isEmpty){
+                            // Hem snapshot null değil, hem hata mesajı yok hem de içinde document var:
+                            // Aşağıdaki documents değişkeni collection içindeki tüm document'ları barındıran bir dizi:
+                            val documents = snapshot.documents
+                            // for loop'a girmeden önce temizledik. Eğer temizlemeseydik her bir paylaşım olduğunda üstüne yazacaktı
+                            // ve bir sürü paylaşım gözükecekti:
+                            goalList.clear()
 
-                        // dakikaları saaate ekleme:
-                        goalTargetTimeHour += goalTargetTimeSecond % 60
-                        goalTargetTimeSecond -= (goalTargetTimeSecond % 60) * 60
+                            for (document in documents){
+                                // Bu for loop'un içinde document'lara tek tek ulaşalım.
+                                // Any geliyordu String'e çevirmek için as String
 
-                        var hourTarget  : String = "0"
-                        var secondTarget : String = "0"
-                        if (goalTargetTimeHour.toString().length < 2){
-                            hourTarget = "0" + goalTargetTimeHour.toString()
+                                // Burada günlük hedefleri çektik:
+                                val goalTitle = document.get("goalTitle") as String?
+                                val dateRange = document.get("dateRange") as String?
+                                val success = document.get("success") as String?
+                                val focusTime = document.get("focusTime") as String?
+                                val targetTime = document.get("targetTime") as String?
+                                val remainingTime = document.get("remainingTime") as String?
+                                val sessionTime = document.get("sessionTime") as String?
+
+
+                                // adapter'dan goalTitle değerini çekelim:
+                                val valueGoalTitle = intent.getStringExtra("valueGoalTitle")
+                                // ve firestore'daki goalTitle değeri ile karşılaştıralım:
+                                if(goalTitle == valueGoalTitle){
+                                    binding.pageNameId.setText(goalTitle)
+
+                                    // Target Time'ı çekelim:
+                                    binding.goalTargetTimeId.setText(targetTime)
+                                    // Focus Time'ı çekelim:
+                                    binding.goalFocusTimeId.setText(focusTime)
+                                    // Remaining Time'ı çekelim:
+                                    binding.goalRemainingTimeId.setText(remainingTime)
+
+                                    documentPath = document.id
+                                }
+
+
+                                val downloadedGoals = Goals(goalTitle, dateRange, success, focusTime, targetTime, remainingTime, sessionTime)
+                                goalList.add(downloadedGoals)
+                            }
+                            // Yeni veri geldi haberin olsun diyoruz böylece recylerView verileri göstermeye çalışacak:
+                            recyclerViewAdapter.notifyDataSetChanged()
                         }
-                        else{
-                            hourTarget = goalTargetTimeHour.toString()
-                        }
-                        if (goalTargetTimeSecond.toString().length < 2){
-                            secondTarget = "0" + goalTargetTimeSecond.toString()
-                        }
-                        else{
-                            secondTarget = goalTargetTimeSecond.toString()
-                        }
-
-                        val newTargetTime = hourTarget + ":"+ secondTarget
-
-                        binding.goalTargetTimeId.setText(targetTime)
-
-                        // CALCULATE FOCUS TIME (ALL OF GOALS)
-                        val focusTimeList = focusTime.toString().split(":")
-                        goalFocusTimeHour += focusTimeList[0].toInt()
-                        goalFocusTimeSecond += focusTimeList[1].toInt()
-
-                        // dakikaları saaate ekleme:
-                        goalFocusTimeHour += goalFocusTimeSecond % 60
-                        goalFocusTimeSecond -= goalFocusTimeSecond % 60
-
-                        var hourFocus  : String = "0"
-                        var secondFocus : String = "0"
-                        if (goalFocusTimeHour.toString().length < 2){
-                            hourFocus = "0" + goalFocusTimeHour.toString()
-                        }
-                        if(goalFocusTimeSecond.toString().length < 2){
-                            secondFocus = "0" + goalFocusTimeSecond.toString()
-                        }
-
-                        val newFocusTime = hourFocus + ":"+ secondFocus
-
-                        binding.goalFocusTimeId.setText(newFocusTime)
-
-
-
-
-                    } else {
-                        Log.d(TAG, "No such document")
                     }
                 }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
-                }
+
+
+            }
         }
+
+       // veri çekme tamamlandı
 
 
         }

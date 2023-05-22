@@ -46,6 +46,7 @@ class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapt
 
         // kotlin syntatic problemini bu şekilde çözdüm:
         holder.itemView.findViewById<TextView>(R.id.goal_title_id).text = goalList[position].goalTitle
+        val valueGoalTitle : String = goalList[position].goalTitle.toString()
         holder.itemView.findViewById<TextView>(R.id.date_range_id).text = goalList[position].dateRange
         holder.itemView.findViewById<TextView>(R.id.success_id).text = goalList[position].success
         holder.itemView.findViewById<TextView>(R.id.focus_time_id).text = goalList[position].focusTime
@@ -54,6 +55,7 @@ class GoalRecyclerAdapter (val goalList : ArrayList<Goals>) : RecyclerView.Adapt
         // recyclerView'un herhangi bir row'una tıklandığında kronometre activity'sine geçiliyor:
         holder.itemView.setOnClickListener { v ->
             val intent = Intent(v.context, TimeMeasurementActivity::class.java)
+            intent.putExtra("valueGoalTitle", valueGoalTitle)
             v.context.startActivity(intent)
 
         }

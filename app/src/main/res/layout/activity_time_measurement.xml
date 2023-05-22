@@ -206,7 +206,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textview_9_id"
+                    android:id="@+id/goal_remaining_time_id"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
