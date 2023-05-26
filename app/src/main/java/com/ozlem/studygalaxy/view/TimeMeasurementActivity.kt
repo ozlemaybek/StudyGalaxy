@@ -1,11 +1,13 @@
 package com.ozlem.studygalaxy.view
 
+import android.R
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -13,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.ozlem.studygalaxy.adapter.GoalRecyclerAdapter
 import com.ozlem.studygalaxy.databinding.ActivityTimeMeasurementBinding
 import com.ozlem.studygalaxy.model.Goals
+
 
 class TimeMeasurementActivity : AppCompatActivity() {
 
@@ -36,6 +39,9 @@ class TimeMeasurementActivity : AppCompatActivity() {
 
     // document path'i almak için:
     var documentPath : String = "0"
+
+    // kronometre için ihtiyacımız var:
+    var databaseFocusTime : String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -78,50 +84,243 @@ class TimeMeasurementActivity : AppCompatActivity() {
             // ve start butonunu aktive etmeliyiz:
             binding.startButtonId.visibility = View.VISIBLE
 
+        }
 
+        binding.finishSessionButtonId.setOnClickListener {
+            // focusTime verisine ihtiyacımız olduğu için çektik:
+            firebase_get_data()
 
-            // Şimdi süre kaydetme işlemini yapalım. Firestore'a data gönderelim:
-            // session time'ı alalım:
+            // SÜRE İŞLEMLERİ
+
+            var sessionHour : Int = 0
+            var sessionMinute : Int = 0
+            var sessionSecond : Int = 0
+
+            var focusHour : Int = 0
+            var focusMinute : Int = 0
+            var focusSecond : Int = 0
+
+            var targetHour : Int = 0
+            var targetMinute : Int = 0
+            var targetSecond : Int = 0
+
+            var focusTimeHour : Int = 0
+            var focusTimeMinute : Int = 0
+            var focusTimeSecond : Int = 0
+
+            var remainingTimeHour : Int = 0
+            var remainingTimeMinute : Int = 0
+            var remainingTimeSecond : Int = 0
+
+            var newFocusTime : String = "0"
+            var newRemainingTime : String = "0"
+            var allFocusTimeSecond : Int = 0
+
+            var allFocusForPercent : Int = 0
+            var allTargetForPercent : Int = 0
+
+            var databaseFocusTimeList = databaseFocusTime.split(":")
+
+            // SESSION TIME
             val sessionTimeValue = binding.chronometerId.text.toString()
 
             var sessionTimeValueList = sessionTimeValue.split(":")
-            var sessionHour = sessionTimeValueList[0].toInt()
-            var sessionSecond = sessionTimeValueList[1].toInt()
 
-            // target time'ı alalım:
+            if(sessionTimeValueList.size < 3){
+                sessionMinute = sessionTimeValueList[0].toInt()
+                sessionSecond = sessionTimeValueList[1].toInt()
+            }
+            if(sessionTimeValueList.size == 3){
+                sessionHour = sessionTimeValueList[0].toInt()
+                sessionMinute = sessionTimeValueList[1].toInt()
+                sessionSecond = sessionTimeValueList[2].toInt()
+            }
+
+
+            // TARGET TIME
             val targetTimeValue = binding.goalTargetTimeId.text.toString()
 
             var targetTimeValueList = targetTimeValue.split(":")
-            var targetHour = targetTimeValueList[0].toInt()
-            var targetSecond = targetTimeValueList[1].toInt()
 
-            // focus time'ı alalım:
+            if(targetTimeValueList.size < 3){
+                targetMinute = targetTimeValueList[0].toInt()
+                targetSecond = targetTimeValueList[1].toInt()
+            }
+            if(targetTimeValueList.size == 3){
+                targetHour = targetTimeValueList[0].toInt()
+                targetMinute = targetTimeValueList[1].toInt()
+                targetSecond = targetTimeValueList[2].toInt()
+            }
+
+            // FOCUS TIME
             val focusTimeValue = binding.goalFocusTimeId.text.toString()
 
             var focusTimeValueList = focusTimeValue.split(":")
-            var focusHour = focusTimeValueList[0].toInt()
-            var focusSecond = focusTimeValueList[1].toInt()
 
-            var focusTimeHour = focusHour.toInt() + sessionHour.toInt()
-            var focusTimeSecond = focusSecond.toInt() + sessionSecond.toInt()
+            /*
+            if(focusTimeValueList.size < 3){
+                focusMinute = focusTimeValueList[0].toInt()
+                focusSecond = focusTimeValueList[1].toInt()
+            }
+            if(focusTimeValueList.size == 3){
+                focusHour = focusTimeValueList[0].toInt()
+                focusMinute = focusTimeValueList[1].toInt()
+                focusSecond = focusTimeValueList[2].toInt()
+            }*/
 
-            // dakikaları saaate ekleme:
-            focusTimeHour += focusTimeSecond % 60
-            focusTimeSecond -= (focusTimeSecond % 60) * 60
+            if(sessionTimeValueList.size < 3 ){
+                // Bu durumda sessionTime'da sadece dakika ve saniye mevcut demektir:
+                /*
+                focusTimeHour = focusTimeValueList[0].toInt()
+                focusTimeMinute = focusTimeValueList[1].toInt() + sessionMinute.toInt()
+                focusTimeSecond = focusTimeValueList[2].toInt() + sessionSecond.toInt() */
 
-            val newFocusTime = focusTimeHour.toString() + ":" + focusTimeSecond.toString()
+                // önce her şeyi saniye cinsine çeviriyorum:
+                allFocusTimeSecond = focusTimeValueList[0].toInt() * 3600 + focusTimeValueList[1].toInt() * 60 +
+                        focusTimeValueList[2].toInt() + sessionMinute.toInt() * 60 + sessionSecond.toInt()
+
+                // success için:
+                allFocusForPercent = allFocusTimeSecond
+
+                // yeni focus time için hesaplar:
+                var newFocusTimeHour = (allFocusTimeSecond / 3600).toInt()
+                allFocusTimeSecond = allFocusTimeSecond - newFocusTimeHour * 3600
+                val newFocusTimeMinute = (allFocusTimeSecond / 60).toInt()
+                allFocusTimeSecond = allFocusTimeSecond - newFocusTimeMinute * 60
+                val newFocusTimeSecond = allFocusTimeSecond
+
+                // yeni focus time:
+                if(newFocusTimeHour.toString().length < 2){
+                    newFocusTime = "0" + newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeMinute.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeMinute.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeMinute.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeMinute.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+
+            }
+
+            if(sessionTimeValueList.size == 3 ){
+                // Bu durumda sessionTime'da saat, dakika ve saniye mevcuttur:
+                // önce her şeyi saniye cinsine çeviriyorum:
+                var allFocusTimeSecond = focusTimeValueList[0].toInt() * 3600 + focusTimeValueList[1].toInt() * 60 +
+                        focusTimeValueList[2].toInt() + sessionHour.toInt() * 3600 + sessionMinute.toInt() * 60
+                + sessionSecond.toInt()
+
+                // success için:
+                allFocusForPercent = allFocusTimeSecond
+
+                // yeni focus time için hesaplar:
+                var newFocusTimeHour = allFocusTimeSecond % 3600
+                allFocusTimeSecond -= allFocusTimeSecond % 3600
+                val newFocusTimeMinute = allFocusTimeSecond % 60
+                allFocusTimeSecond -= allFocusTimeSecond % 60
+                val newFocusTimeSecond = allFocusTimeSecond
+
+                // yeni focus time:
+                if(newFocusTimeHour.toString().length < 2){
+                    newFocusTime = "0" + newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeMinute.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeMinute.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeMinute.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+                if(newFocusTimeHour.toString().length < 2 && newFocusTimeMinute.toString().length < 2 && newFocusTimeSecond.toString().length < 2){
+                    newFocusTime =  "0" + newFocusTimeHour.toString() + ":" + "0" + newFocusTimeMinute.toString() + ":" + "0" +
+                            newFocusTimeSecond.toString()
+                }
+
+            }
+
 
             // Remaining Time Hesapları:
-            val remainingTimeValue = binding.goalRemainingTimeId.text.toString()
 
-            var remainingTimeValueList = remainingTimeValue.split(":")
-            var remainingHour = remainingTimeValueList[0].toInt()
-            var remainingSecond = remainingTimeValueList[1].toInt()
+            var allTargetTimeSecond = targetTimeValueList[0].toInt()*3600 + targetTimeValueList[1].toInt()*60
+            var allRemainingTimeSecond = allTargetTimeSecond - allFocusTimeSecond
 
-            var remainingTimeHour = targetHour.toInt() - focusTimeHour.toInt()
-            var remainingTimeSecond = targetSecond.toInt() + focusTimeSecond.toInt()
+            // success için:
+            allTargetForPercent = allTargetTimeSecond
 
-            val newRemainingTime = remainingTimeHour.toString() + ":" + remainingTimeSecond.toString()
+            // yeni focus time için hesaplar:
+            var newRemainingTimeHour = (allRemainingTimeSecond / 3600).toInt()
+            allRemainingTimeSecond = allRemainingTimeSecond - newRemainingTimeHour * 3600
+            val newRemainingTimeMinute = (allRemainingTimeSecond / 60).toInt()
+            allRemainingTimeSecond = allRemainingTimeSecond - newRemainingTimeMinute * 60
+            val newRemainingTimeSecond = allRemainingTimeSecond
+
+
+            // yeni focus time:
+            if(newRemainingTimeHour.toString().length < 2){
+                newRemainingTime = "0" + newRemainingTimeHour.toString() + ":" + newRemainingTimeMinute.toString() + ":" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeMinute.toString().length < 2){
+                newRemainingTime =  newRemainingTimeHour.toString() + ":" + "0" + newRemainingTimeMinute.toString() + ":" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeSecond.toString().length < 2){
+                newRemainingTime =  newRemainingTimeHour.toString() + ":" + newRemainingTimeMinute.toString() + ":" + "0" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeHour.toString().length < 2 && newRemainingTimeMinute.toString().length < 2){
+                newRemainingTime =  "0" + newRemainingTimeHour.toString() + ":" + "0" + newRemainingTimeMinute.toString() + ":" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeMinute.toString().length < 2 && newRemainingTimeSecond.toString().length < 2){
+                newRemainingTime =  newRemainingTimeHour.toString() + ":" + "0" + newRemainingTimeMinute.toString() + ":" + "0" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeHour.toString().length < 2 && newRemainingTimeSecond.toString().length < 2){
+                newRemainingTime =  "0" + newRemainingTimeHour.toString() + ":" + newRemainingTimeMinute.toString() + ":" + "0" +
+                        newRemainingTimeSecond.toString()
+            }
+            if(newRemainingTimeHour.toString().length < 2 && newRemainingTimeMinute.toString().length < 2 && newRemainingTimeSecond.toString().length < 2){
+                newRemainingTime =  "0" + newRemainingTimeHour.toString() + ":" + "0" + newRemainingTimeMinute.toString() + ":" + "0" +
+                        newRemainingTimeSecond.toString()
+            }
+
+            // SUCCESS
+
+            var successCalculate = ((allFocusForPercent / allTargetForPercent) * 100)
+            var newSuccess = "%" + successCalculate
 
 
             // adapter'dan goalTitle değerini çekelim:
@@ -134,13 +333,14 @@ class TimeMeasurementActivity : AppCompatActivity() {
                         mapOf(
                             "focusTime" to newFocusTime,
                             "remainingTime" to newRemainingTime,
+                            "success" to newSuccess
+
                         ),
                     )
             }
 
-
-
-
+            // activity'yi sonlandırıp HomeFragment'a geri dönüyoruz:
+            finish()
         }
 
         // Güncel kullanıcı (uygulamaya şuanda giriş yapmış olan kullanıcı)'yı alalım:
@@ -242,6 +442,8 @@ class TimeMeasurementActivity : AppCompatActivity() {
                                     binding.goalTargetTimeId.setText(targetTime)
                                     // Focus Time'ı çekelim:
                                     binding.goalFocusTimeId.setText(focusTime)
+                                    // pause butonu için:
+                                    databaseFocusTime = focusTime.toString()
                                     // Remaining Time'ı çekelim:
                                     binding.goalRemainingTimeId.setText(remainingTime)
 

@@ -198,8 +198,8 @@ class CreateGoalActivity : AppCompatActivity(){
             dateRange = "today"
             val date = Timestamp.now().toDate().toString()
 
-            val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
-            val focusTime = "00:00"
+            val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString() + ":" + "00"
+            val focusTime = "00:00:00"
             val remainingTime = targetTime
             val success = "%0"
 
@@ -265,8 +265,8 @@ class CreateGoalActivity : AppCompatActivity(){
             var saturday = false
             var sunday = false
 
-            val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString()
-            val focusTime = "00:00"
+            val targetTime = binding.dailyGoalTimeId1.text.toString() + ":" + binding.dailyGoalTimeId2.text.toString() + ":" + "00"
+            val focusTime = "00:00:00"
             val remainingTime = targetTime
             val success = "%0"
 

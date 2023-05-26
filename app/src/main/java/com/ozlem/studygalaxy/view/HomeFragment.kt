@@ -414,9 +414,20 @@ class HomeFragment : Fragment() {
 
                                 var allGoalsTargetTimeHour : Int = 0
                                 var allGoalsTargetTimeSecond : Int = 0
+                                var allGoalsTargetTimeMinute : Int = 0
                                 var allGoalsFocusTimeHour : Int = 0
+                                var allGoalsFocusTimeMinute : Int = 0
                                 var allGoalsFocusTimeSecond : Int = 0
                                 var allGoalsSuccess : Int = 0
+
+                                var newTargetTimeHour : Int = 0
+                                var newTargetTimeMinute : Int = 0
+                                var newTargetTimeSecond : Int = 0
+
+                                var newFocusTimeHour : Int = 0
+                                var newFocusTimeMinute : Int = 0
+                                var newFocusTimeSecond : Int = 0
+
 
                                 for (document in documents){
                                     // Bu for loop'un içinde document'lara tek tek ulaşalım.
@@ -435,29 +446,49 @@ class HomeFragment : Fragment() {
 
                                     // CALCULATE TARGET TIME (ALL OF GOALS)
                                     val targetTimeList = targetTime.toString().split(":")
-                                    allGoalsTargetTimeHour += targetTimeList[0].toInt()
-                                    allGoalsTargetTimeSecond += targetTimeList[1].toInt()
+                                    /*allGoalsTargetTimeHour += targetTimeList[0].toInt()
+                                    allGoalsTargetTimeMinute += targetTimeList[1].toInt()
+                                    allGoalsTargetTimeSecond += targetTimeList[2].toInt()*/
 
-                                    // dakikaları saaate ekleme:
-                                    allGoalsTargetTimeHour += allGoalsTargetTimeSecond % 60
-                                    allGoalsTargetTimeSecond -= (allGoalsTargetTimeSecond % 60) * 60
+                                    var allGoalsTargetTimeSecond = targetTimeList[0].toInt()*3600 + targetTimeList[1].toInt()*60 + targetTimeList[2].toInt()
 
-                                    var hourTarget  : String = "0"
-                                    var secondTarget : String = "0"
-                                    if (allGoalsTargetTimeHour.toString().length < 2){
-                                        hourTarget = "0" + allGoalsTargetTimeHour.toString()
-                                    }
-                                    else{
-                                        hourTarget = allGoalsTargetTimeHour.toString()
-                                    }
-                                    if (allGoalsTargetTimeSecond.toString().length < 2){
-                                        secondTarget = "0" + allGoalsTargetTimeSecond.toString()
-                                    }
-                                    else{
-                                        secondTarget = allGoalsTargetTimeSecond.toString()
-                                    }
+                                    // yeni focus time için hesaplar:
+                                    newTargetTimeHour += (allGoalsTargetTimeSecond / 3600).toInt()
+                                    allGoalsTargetTimeSecond = allGoalsTargetTimeSecond - newTargetTimeHour * 3600
+                                    newTargetTimeMinute += (allGoalsTargetTimeSecond / 60).toInt()
+                                    allGoalsTargetTimeSecond = allGoalsTargetTimeSecond - newTargetTimeMinute * 60
+                                    newTargetTimeSecond += allGoalsTargetTimeSecond
 
-                                    val newTargetTime = hourTarget + ":"+ secondTarget
+                                    var newTargetTime : String = "0"
+
+                                    if(newTargetTimeHour.toString().length < 2){
+                                        newTargetTime = "0" + newTargetTimeHour.toString() + ":" + newTargetTimeMinute.toString() + ":" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeMinute.toString().length < 2){
+                                        newTargetTime =  newTargetTimeHour.toString() + ":" + "0" + newTargetTimeMinute.toString() + ":" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeSecond.toString().length < 2){
+                                        newTargetTime =  newTargetTimeHour.toString() + ":" + newTargetTimeMinute.toString() + ":" + "0" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeHour.toString().length < 2 && newTargetTimeMinute.toString().length < 2){
+                                        newTargetTime =  "0" + newTargetTimeHour.toString() + ":" + "0" + newTargetTimeMinute.toString() + ":" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeMinute.toString().length < 2 && newTargetTimeSecond.toString().length < 2){
+                                        newTargetTime =  newTargetTimeHour.toString() + ":" + "0" + newTargetTimeMinute.toString() + ":" + "0" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeHour.toString().length < 2 && newTargetTimeSecond.toString().length < 2){
+                                        newTargetTime =  "0" + newTargetTimeHour.toString() + ":" + newTargetTimeMinute.toString() + ":" + "0" +
+                                                newTargetTimeSecond.toString()
+                                    }
+                                    if(newTargetTimeHour.toString().length < 2 && newTargetTimeMinute.toString().length < 2 && newTargetTimeSecond.toString().length < 2){
+                                        newTargetTime =  "0" + newTargetTimeHour.toString() + ":" + "0" + newTargetTimeMinute.toString() + ":" + "0" +
+                                                newTargetTimeSecond.toString()
+                                    }
 
                                     binding.allGoalsTargetTimeId.setText(newTargetTime)
 

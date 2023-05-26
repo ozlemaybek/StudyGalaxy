@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/page_name_id"
             android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
             android:textSize="24sp"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="54dp" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_chronometer_id"
@@ -119,6 +121,14 @@
                             android:visibility="visible"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/finish_session_button_id"
+                        style="@style/allButtonStyle"
+                        android:layout_width="140dp"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:text="Finish Session" />
 
                 </LinearLayout>
 
